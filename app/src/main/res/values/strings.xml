@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Cooking App</string>
+    <!--  Nav  -->
+    <string name="recipes_title_navigation">Recipes</string>
+    <string name="cart_title_navigation">Cart</string>
+    <string name="linklist_title_navigation">Try Out</string>
+    <string name="calendar_title_navigation">Seasons</string>
+    <string name="home_title_navigation">Hey you,</string>
+    <string name="week_title_navigation">My Week</string>
+
+    <plurals name="cart_item_count">
+        <item quantity="zero">Never bought</item>
+        <item quantity="one">Bought once</item>
+        <item quantity="other">Bought %1$d times</item>
+    </plurals>
+    <string name="cart_cta_pay">Pay Now</string>
+
+    <!--    Login Strings-->
+    <string name="login_input_email">Email</string>
+    <string name="login_input_password">Password</string>
+    <string name="login_button_signup">Sign Up</string>
+    <string name="login_button_signin">Sign In</string>
+    <string name="login_button_forgot_password">Forgot Password?</string>
+
+    <!--  Profil  -->
+    <string name="profile_title_navigation">Profile</string>
+    <string name="profile_button_logout">Logout</string>
+
+    <!--  Recipes  -->
+    <string name="recipe_button_add">Add Recipe</string>
+</resources>
