@@ -14,17 +14,15 @@ import com.saskiahfu.hfu.cookingapp.feature.main.days
 import com.saskiahfu.hfu.cookingapp.feature.main.modifier
 
 class MealplanUI(
-    val day: MealId,
-    val bfName: String,
-    val luName: String,
-    val diName: String,
+//    val day: MealId,
+    val day: String,
+    var bfName: String,
+    var luName: String,
+    var diName: String,
 )
-
-
 
 @Composable
 fun addMealButtonIcon(category: String) { //TODO code category/day Class or however it goes in
-
     IconButton(
         onClick = { /*TODO Code Add Meal Button*/ },
         modifier.size(25.dp)

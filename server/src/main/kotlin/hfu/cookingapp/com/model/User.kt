@@ -12,14 +12,14 @@ data class User(
     val id: String,
     val name: String,
     val password: String,
-    val cartId: String,
+//    val cartId: String,
 )
 
 object Users : Table() {
     val id = varchar("id", 128)
     val name = varchar("name", 1024)
     val password = varchar("password", 1024)
-    val cartId = varchar("cartId", 1024)
+//    val cartId = varchar("cartId", 1024)
     override val primaryKey = PrimaryKey(id)
 }
 
@@ -30,7 +30,7 @@ interface UserDao {
         id: String,
         name: String,
         password: String,
-        cartId: String,
+//        cartId: String,
     ): User?
 }
 
@@ -46,12 +46,12 @@ class UserDaoImpl : UserDao {
         }.firstOrNull()?.let(::resultRowToUser)
     }
 
-    override suspend fun addUser(id: String, name: String, password: String, cartId: String): User? = dbQuery {
+    override suspend fun addUser(id: String, name: String, password: String): User? = dbQuery {
         val insertStatement = Users.insert {
             it[Users.id] = id
             it[Users.name] = name
             it[Users.password] = password
-            it[Users.cartId] = cartId
+//            it[Users.cartId] = cartId
         }
         insertStatement.resultedValues?.singleOrNull()?.let(::resultRowToUser)
     }
@@ -60,7 +60,7 @@ class UserDaoImpl : UserDao {
         id = row[Users.id],
         name = row[Users.name],
         password = row[Users.password],
-        cartId = row[Users.cartId],
+//        cartId = row[Users.cartId],
     )
 }
 

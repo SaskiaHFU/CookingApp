@@ -23,7 +23,7 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideWebService(
-//        userSettingsRepository: UserSettingsRepository,
+        userSettingsRepository: UserSettingsRepository,
     ): WebService {
         return Retrofit.Builder()
             .client(
@@ -33,19 +33,19 @@ object NetworkModule {
                             Log.d("OKHTTP", it)
                         }.apply { level = HttpLoggingInterceptor.Level.BODY }
                     )
-//                    .addInterceptor { chain ->
-//                        val credentials = runBlocking {
-//                            when (val state = userSettingsRepository.getSettings().loginState) {
-//                                is LoginState.LoggedIn -> state.credentials
-//                                LoginState.LoggedOut -> ""
-//                                is LoginState.LoggingIn -> state.credentials
-//                            }
-//                        }
-//                        val request = chain.request().newBuilder()
-//                            .addHeader("Authorization", "Basic $credentials")
-//                            .build()
-//                        chain.proceed(request)
-//                    }
+                    .addInterceptor { chain ->
+                        val credentials = runBlocking {
+                            when (val state = userSettingsRepository.getSettings().loginState) {
+                                is LoginState.LoggedIn -> state.credentials
+                                LoginState.LoggedOut -> ""
+                                is LoginState.LoggingIn -> state.credentials
+                            }
+                        }
+                        val request = chain.request().newBuilder()
+                            .addHeader("Authorization", "Basic $credentials")
+                            .build()
+                        chain.proceed(request)
+                    }
                     .build()
             )
             .baseUrl(WebService.BASE_URL)

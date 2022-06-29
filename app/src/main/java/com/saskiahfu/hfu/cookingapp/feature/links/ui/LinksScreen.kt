@@ -17,7 +17,6 @@ import com.saskiahfu.hfu.cookingapp.feature.main.pageDirection
 
 @Composable
 fun LinksScreen(viewModel: LinksViewModel = viewModel()) {
-    val products by viewModel.bindUi(LocalContext.current).observeAsState(emptyList())
     LinksScreenUI()
 }
 

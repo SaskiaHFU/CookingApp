@@ -18,10 +18,10 @@ class DownloadRecipesUseCase @Inject constructor(
                 Recipe.create(
                     RecipeId(it.id),
                     it.name,
-//                    img = RecipeImg.Local(it.name),
-//                    it.ingredients,
-//                    it.steps,
-//                    it.category,
+                    img = RecipeImg.Remote(it.img_url),
+                    it.ingredients,
+                    it.steps,
+                    it.category,
                     it.sourceName,
                     it.sourceUri
                 )

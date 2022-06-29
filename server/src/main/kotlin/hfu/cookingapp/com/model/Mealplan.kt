@@ -39,16 +39,17 @@ class DailyMealsDaoImpl : DailyMealsDao {
         }.map(::resultRowToDailyMeals)
     }
 
-    override suspend fun addMealToMealplan(day: String, bfName: String, luName: String, diName: String): DailyMeals? = dbQuery {
-        val insertStatement = Mealplan.insert {
-            it[Mealplan.day] = day
-            it[Mealplan.bfName] = bfName
-            it[Mealplan.luName] = luName
-            it[Mealplan.diName] = diName
-        }
-        insertStatement.resultedValues?.singleOrNull()?.let(::resultRowToDailyMeals)
+    override suspend fun addMealToMealplan(day: String, bfName: String, luName: String, diName: String): DailyMeals? =
+        dbQuery {
+            val insertStatement = Mealplan.insert {
+                it[Mealplan.day] = day
+                it[Mealplan.bfName] = bfName
+                it[Mealplan.luName] = luName
+                it[Mealplan.diName] = diName
+            }
+            insertStatement.resultedValues?.singleOrNull()?.let(::resultRowToDailyMeals)
 
-    }
+        }
 
 
     private fun resultRowToDailyMeals(row: ResultRow) = DailyMeals(

@@ -8,49 +8,50 @@ sealed class RecipeImg {
     //TODO anpassen
     object Unknown : RecipeImg()
     class Local(val name: String) : RecipeImg()
+    class Remote(val url: String) : RecipeImg()
 
 }
 
 class Recipe private constructor(
     val id: RecipeId,
     val name: String,
-//    val img: RecipeImg,
-//    val ingredients: List<String>,
-//    val steps: List<String>,
-//    val category: String,
+    val img: RecipeImg,
+    val ingredients: String,
+    val steps: String,
+    val category: String,
     val sourceName: String,
     val sourceUri: String
 ) {
 
     //    Compare Recipes
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Recipe
-
-        if (id != other.id) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return id.hashCode()
-    }
+//    override fun equals(other: Any?): Boolean {
+//        if (this === other) return true
+//        if (javaClass != other?.javaClass) return false
+//
+//        other as Recipe
+//
+//        if (id != other.id) return false
+//
+//        return true
+//    }
+//
+//    override fun hashCode(): Int {
+//        return id.hashCode()
+//    }
 //Create Recipes although its private and you cant access it
 
     companion object {
         fun create(
             id: RecipeId,
             name: String,
-//            img: RecipeImg,
-//            ingredients: List<String>,
-//            steps: List<String>,
-//            category: String,
+            img: RecipeImg,
+            ingredients: String,
+            steps: String,
+            category: String,
             sourceName: String,
             sourceUri: String
         ): Recipe? {
-            return Recipe(id, name, sourceName, sourceUri)
+            return Recipe(id, name, img, ingredients, steps, category, sourceName, sourceUri)
         }
 
     }

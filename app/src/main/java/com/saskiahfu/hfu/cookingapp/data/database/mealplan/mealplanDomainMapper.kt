@@ -5,7 +5,8 @@ import com.saskiahfu.hfu.cookingapp.domain.model.Mealplan
 
 
 fun mealToDb(meal: Mealplan): MealplanDb = MealplanDb(
-    day = meal.day.value,
+//    day = meal.day.value,
+    day = meal.day,
     bfName = meal.bfName,
     luName = meal.luName,
     diName = meal.diName,
@@ -13,7 +14,8 @@ fun mealToDb(meal: Mealplan): MealplanDb = MealplanDb(
 
 fun mealFromDb(meal: MealplanDb): Mealplan? {
     return Mealplan.update(
-        day = MealId(meal.day),
+//        day = MealId(meal.day),
+        day = meal.day,
         bfName = meal.bfName,
         luName = meal.luName,
         diName = meal.diName,

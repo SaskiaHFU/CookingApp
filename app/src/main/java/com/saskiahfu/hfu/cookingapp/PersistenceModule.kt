@@ -7,12 +7,12 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
 import com.saskiahfu.hfu.cookingapp.data.database.AppDatabase
 import com.saskiahfu.hfu.cookingapp.data.database.ProductDao
-import com.saskiahfu.hfu.cookingapp.data.database.cart.ShoppingCartDao
+import com.saskiahfu.hfu.cookingapp.data.database.cart.CartDao
 import com.saskiahfu.hfu.cookingapp.data.database.recipe.RecipeDao
 import com.saskiahfu.hfu.cookingapp.data.database.links.LinksCategoryDao
 import com.saskiahfu.hfu.cookingapp.data.database.links.LinksDao
 import com.saskiahfu.hfu.cookingapp.data.database.mealplan.DailyMealsDao
-//import com.saskiahfu.hfu.cookingapp.data.database.recipe.RecipeCategoryDao
+import com.saskiahfu.hfu.cookingapp.data.database.recipe.RecipeCategoryDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -48,19 +48,22 @@ object PersistenceModule {
     ): ProductDao = database.productDao()
 
     @Provides
-    fun provideShoppingCartDao(
+    fun provideCartDao(
         database: AppDatabase,
-    ): ShoppingCartDao = database.shoppingCartDao()
+    ): CartDao = database.cartDao()
+//    fun provideShoppingCartDao(
+//        database: AppDatabase,
+//    ): ShoppingCartDao = database.shoppingCartDao()
 
     @Provides
     fun provideRecipeDao(
         database: AppDatabase,
     ): RecipeDao = database.recipeDao()
 
-//    @Provides
-//    fun provideRecipeCatDao(
-//        database: AppDatabase,
-//    ): RecipeCategoryDao = database.recipeCatDao()
+    @Provides
+    fun provideRecipeCatDao(
+        database: AppDatabase,
+    ): RecipeCategoryDao = database.recipeCatDao()
 
     @Provides
     fun provideLinksDao(

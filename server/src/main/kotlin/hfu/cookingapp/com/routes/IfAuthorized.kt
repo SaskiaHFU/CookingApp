@@ -9,16 +9,16 @@ import io.ktor.server.auth.principal
 import io.ktor.server.response.respond
 import io.ktor.util.pipeline.PipelineContext
 
-suspend fun PipelineContext<*, ApplicationCall>.ifAuthorized(
-    f: suspend PipelineContext<*, ApplicationCall>.(cartId: String) -> Unit
-) {
-    call.principal<UserIdPrincipal>()?.name?.let { userId ->
-        userDao.userById(userId)?.cartId?.let { cartId ->
-            if (cartId == call.parameters["id"]) {
-                f(cartId)
-            } else {
-                call.respond(HttpStatusCode.NotFound)
-            }
-        }  ?: call.respond(HttpStatusCode.Unauthorized)
-    } ?: call.respond(HttpStatusCode.Unauthorized)
-}
+//suspend fun PipelineContext<*, ApplicationCall>.ifAuthorized(
+//    f: suspend PipelineContext<*, ApplicationCall>.(cartId: String) -> Unit
+//) {
+//    call.principal<UserIdPrincipal>()?.name?.let { userId ->
+//        userDao.userById(userId)?.cartId?.let { cartId ->
+//            if (cartId == call.parameters["id"]) {
+//                f(cartId)
+//            } else {
+//                call.respond(HttpStatusCode.NotFound)
+//            }
+//        }  ?: call.respond(HttpStatusCode.Unauthorized)
+//    } ?: call.respond(HttpStatusCode.Unauthorized)
+//}

@@ -1,6 +1,8 @@
 package com.saskiahfu.hfu.cookingapp.data.network
 
 
+import com.saskiahfu.hfu.cookingapp.domain.model.RecipeCategory
+import com.saskiahfu.hfu.cookingapp.domain.model.RecipeImg
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import retrofit2.http.Body
@@ -28,25 +30,38 @@ interface WebService {
 
 
     //Cart
-    @GET("v1/cart/{id}")
-    suspend fun getCartById(@Path("id") id: String): List<ShoppingCartItemDto>
 
-    @DELETE("v1/cart/{id}")
+    @GET("v1/cart")
+    suspend fun getCart(): List<CartItemDto>
+
+    @DELETE("v1/cart")
     suspend fun clearCart(@Path("id") id: String)
+
+    @POST("v1/cart")
+    suspend fun addCartItem(@Body request: AddCartItemRequestDto)
+
+//    @GET("v1/cart/{id}")
+//    suspend fun getCartById(@Path("id") id: String): List<ShoppingCartItemDto>
+//
+//    @DELETE("v1/cart/{id}")
+//    suspend fun clearCart(@Path("id") id: String)
 
     //    Recipes
     @GET("v1/recipes")
     suspend fun getRecipes(): List<RecipesDto>
 
-//    @POST("v1/recipes")
-//    suspend fun addRecipe(@Body request: AddRecipeRequestDto)
+    @GET("v1/recipeCategory")
+    suspend fun getRecipeCategories(): List<RecipeCategoryDto>
+
+    @POST("v1/recipes")
+    suspend fun addRecipe(@Body request: AddRecipeRequestDto)
 
     //    Mealplan
     @GET("v1/mealplan")
     suspend fun getMeals(): List<MealsDto>
 
-//    @PUT("v1/mealplan")
-//    suspend fun addMeal(@Path("day") day: String, @Body body: AddMealToPlanRequestDto)
+    @PUT("v1/mealplan")
+    suspend fun addMeal(@Path("day") day: String, @Body body: AddMealToPlanRequestDto)
 
 
     companion object {
@@ -57,16 +72,27 @@ interface WebService {
 //Login
 @Serializable
 data class LoginResponseDto(
-    val cartId: String,
+    val id: String,
 )
 
 //Cart
 @Serializable
-data class ShoppingCartItemDto(
+data class CartItemDto(
     val id: String,
-    val productId: String,
-    val cartId: String,
+    val item: String,
 )
+
+@Serializable
+data class AddCartItemRequestDto(
+    val item: String,
+)
+
+//@Serializable
+//data class ShoppingCartItemDto(
+//    val id: String,
+//    val productId: String,
+//    val cartId: String,
+//)
 
 //Product
 @Serializable
@@ -94,7 +120,7 @@ data class SignUpRequestDto(
 
 @Serializable
 data class SignUpResponseDto(
-    val cartId: String,
+    val userName: String,
 )
 
 //Recipes
@@ -102,41 +128,41 @@ data class SignUpResponseDto(
 data class RecipesDto(
     val id: String,
     val name: String,
-//    val img: String,
-//    val ingredients: String,
-//    val steps: String,
-//    val category: String,
+    @SerialName("img")
+    val img_url: String,
+    val ingredients: String,
+    val steps: String,
+    val category: String,
     val sourceName: String,
     val sourceUri: String
 )
 
 
-//@Serializable
-//data class AddRecipeRequestDto(
-//    val id: String,
-//    val name: String,
-////    val img: String,
-////    val ingredients: String,
-////    val steps: String,
-//    val category: String,
-//    val sourceName: String,
-//    val sourceUri: String
-//)
+@Serializable
+data class AddRecipeRequestDto(
+    val name: String,
+    @SerialName("img")
+    val img_url: String,
+    val ingredients: String,
+    val steps: String,
+    val category: String,
+    val sourceName: String,
+    val sourceUri: String
+)
 
-//@Serializable
-//data class AddRecipeCategoryRequestDto(
-//    val id: String,
-//    val name: String,
-//    val recipes: String,
-//)
+@Serializable
+data class RecipeCategoryDto(
+    val id: String,
+    val name: String,
+)
 
-//@Serializable
-//data class AddMealToPlanRequestDto(
-//    val day: String,
-//    val bfName: String,
-//    val luName: String,
-//    val diName: String,
-//)
+@Serializable
+data class AddMealToPlanRequestDto(
+    val day: String,
+    val bfName: String,
+    val luName: String,
+    val diName: String,
+)
 
 @Serializable
 data class MealsDto(

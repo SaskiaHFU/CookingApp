@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 class SignUpViewModel @Inject constructor(
     private val signUp: SignUpUseCase,
 ) : ViewModel() {
+
     fun onSignUp(username: String, password: String) {
         viewModelScope.launch {
             signUp(username, password)

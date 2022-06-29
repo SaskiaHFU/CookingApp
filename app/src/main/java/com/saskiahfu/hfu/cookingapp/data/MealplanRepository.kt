@@ -16,12 +16,15 @@ class MealplanRepository @Inject constructor(
     fun observeAllMeals(): Flow<List<Mealplan>> =
         dao.observeAll().map { it.mapNotNull(::mealFromDb) }
 
-    suspend fun getMealById(id: MealId): Mealplan? =
-        dao.getById(id.value)?.let { mealFromDb(it) }
+    suspend fun getMealById(id: Mealplan): Mealplan? =
+        dao.getById(id.day)?.let { mealFromDb(it) }
 
-    suspend fun updateMeal(meal: Mealplan) {
+    suspend fun getMealByDay(id: String): Mealplan? =
+        dao.getById(id)?.let { mealFromDb(it) }
+
+    suspend fun updateMeal(newMeal: Mealplan) {
         dao.update(
-            mealToDb(meal)
+            mealToDb(newMeal)
         )
     }
 

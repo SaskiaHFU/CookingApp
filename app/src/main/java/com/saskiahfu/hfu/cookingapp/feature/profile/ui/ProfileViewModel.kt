@@ -1,4 +1,4 @@
-package com.raysono.hfu.fridgepay.feature.profile.ui
+package com.saskiahfu.hfu.cookingapp.feature.profile.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

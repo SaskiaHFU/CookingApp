@@ -1,39 +1,36 @@
 package com.saskiahfu.hfu.cookingapp.feature.main.ui
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.saskiahfu.hfu.cookingapp.R
 import com.saskiahfu.hfu.cookingapp.feature.main.modifier
-import com.saskiahfu.hfu.cookingapp.feature.main.navigation.BottomNavigationItem
+import com.saskiahfu.hfu.cookingapp.feature.main.navigation.*
 import com.saskiahfu.hfu.cookingapp.feature.main.navigation.BottomNavigationItem.Cart
-import com.saskiahfu.hfu.cookingapp.feature.main.navigation.MainBottomNavigation
-import com.saskiahfu.hfu.cookingapp.feature.main.navigation.MainNavigationGraph
 
 
 @Composable
 fun MainScreen(viewModel: MainViewModel = viewModel()) {
-    val totalCount by viewModel.bindUi().observeAsState(0)
-    MainScreenUI(totalCount)
+//    val totalCount by viewModel.bindUi().observeAsState(0)
+    MainScreenUI()
 }
 
 @Composable
-private fun MainScreenUI(totalCount: Int) {
+private fun MainScreenUI() {
 
     val font = MaterialTheme.typography.h2
+    var navigated by remember { mutableStateOf(false) }
     val navController = rememberNavController()
 
     Scaffold(
@@ -41,28 +38,89 @@ private fun MainScreenUI(totalCount: Int) {
             val navBackStackEntry by navController.currentBackStackEntryAsState()
             val currentRoute = navBackStackEntry?.destination?.route
 
-
             TopAppBar(
                 title = {
                     Row(
-                        modifier.padding(start = 30.dp)
+                        modifier
+                            .padding(start = 30.dp, end = 30.dp)
+                            .height(60.dp)
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-
                         when (currentRoute) {
-                            Cart.routeName -> Text(//TODO für alle anlegen
+                            Cart.routeName -> Text(
                                 text = stringResource(Cart.title), style = font
                             )
                             BottomNavigationItem.Recipes.routeName -> Text(
-                                text = stringResource(BottomNavigationItem.Recipes.title), style = font
+                                text = stringResource(BottomNavigationItem.Recipes.title),
+                                style = font
+                            )
+                            BottomNavigationItem.Links.routeName -> Text(
+                                text = stringResource(BottomNavigationItem.Links.title),
+                                style = font
+                            )
+                            BottomNavigationItem.Week.routeName -> Text(
+                                text = stringResource(BottomNavigationItem.Week.title),
+                                style = font
+                            )
+                            BottomNavigationItem.Home.routeName -> Text(
+                                text = stringResource(BottomNavigationItem.Home.title),
+                                style = font
+                            )
+                            BottomNavigationItem.Profile.routeName -> Text(
+                                text = stringResource(BottomNavigationItem.Profile.title),
+                                style = font
+                            )
+                            BottomNavigationItem.AddRecipe.routeName -> Text(
+                                text = stringResource(BottomNavigationItem.AddRecipe.title),
+                                style = font
                             )
                         }
                     }
                 },
-                backgroundColor = MaterialTheme.colors.background
+                navigationIcon = { MainTopNavigation(navController)},
 
+//                {
+//                    Row(
+//                        modifier
+//                            .width(60.dp)
+//                            .fillMaxHeight(),
+//                        horizontalArrangement = Arrangement.SpaceEvenly,
+//
+//                        ) {
+//                        IconButton(
+//                            onClick = {
+//                                navController.navigate(BottomNavigationItem.AddRecipe.routeName)
+//                            },
+//                        ) {
+//                            Icon(
+//                                painter = painterResource(id = R.drawable.ic_baseline_add_24),
+//                                "Add Recipe"
+//                            )
+//                        }
+//                        IconButton(
+//                            onClick = {
+//                                navigated = false
+//                                println("before: " + navigated)
+//                                if(!navigated) {
+//                                    println("clicked: " + navigated)
+//                                    navController.navigate(BottomNavigationItem.Profile.routeName)
+//                                    navigated = true
+//                                }
+//                                println("before: " + navigated)
+//                            },
+//                        ) {
+//                            Icon(
+//                                painter = painterResource(id = R.drawable.ic_baseline_person_24),
+//                                "Profil"
+//                            )
+//                        }
+//                    }
+//                },
+                backgroundColor = MaterialTheme.colors.background
             )
         },
-        bottomBar = { MainBottomNavigation(navController, totalCount) }
+        bottomBar = { MainBottomNavigation(navController) }
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {
             MainNavigationGraph(navController)
@@ -70,8 +128,8 @@ private fun MainScreenUI(totalCount: Int) {
     }
 }
 
-@Composable
-@Preview
-fun MainScreen_Preview() {
-    MainScreenUI(42)
-}
+//@Composable
+//@Preview
+//fun MainScreen_Preview() {
+//    MainScreenUI(42)
+//}

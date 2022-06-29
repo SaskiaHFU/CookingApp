@@ -5,7 +5,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.saskiahfu.hfu.cookingapp.domain.model.ShoppingCartId
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -28,7 +27,7 @@ class UserSettingsRepository @Inject constructor(
     suspend fun updateSettings(f: (UserSettings) -> UserSettings): UserSettings {
         val prefs = dataStore.edit {
             val newSettings = f(settingsFromPreferences(it))
-            it[KEY_CART_ID] = newSettings.cartId.value
+//            it[KEY_CART_ID] = newSettings.cartId.value
             when (val loginState = newSettings.loginState) {
                 is LoginState.LoggedIn -> {
                     it.remove(KEY_IS_LOGGING_IN)
@@ -48,7 +47,7 @@ class UserSettingsRepository @Inject constructor(
     }
 
     private fun settingsFromPreferences(prefs: Preferences) = UserSettings(
-        cartId = ShoppingCartId(prefs[KEY_CART_ID] ?: ""),
+//        cartId = ShoppingCartId(prefs[KEY_CART_ID] ?: ""),
         loginState = prefs[KEY_CREDENTIALS]?.let { credentials ->
             if (prefs[KEY_IS_LOGGING_IN] == true) {
                 LoginState.LoggingIn(credentials)
@@ -59,7 +58,7 @@ class UserSettingsRepository @Inject constructor(
     )
 
     private companion object {
-        private val KEY_CART_ID = stringPreferencesKey("shoppingCartId")
+//        private val KEY_CART_ID = stringPreferencesKey("shoppingCartId")
         private val KEY_CREDENTIALS = stringPreferencesKey("credentials")
         private val KEY_IS_LOGGING_IN = booleanPreferencesKey("isLoggingIn")
     }
@@ -68,7 +67,7 @@ class UserSettingsRepository @Inject constructor(
 /** Settings associated with the current user. */
 data class UserSettings(
     /** The ID of the shopping cart used by this user. */
-    val cartId: ShoppingCartId,
+//    val cartId: ShoppingCartId,
 
     /** The current login state. */
     val loginState: LoginState,

@@ -6,38 +6,58 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
+import com.saskiahfu.hfu.cookingapp.data.database.recipe.RecipeCategoryDb
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-abstract class ShoppingCartDao {
+interface CartDao {
 
-    @Transaction
-    open suspend fun upsert(item: ShoppingCartProductDb) {
-        val rowId = insert(item)
-        if (rowId == -1L) {
-            update(item)
-        }
-    }
+    @Insert
+    suspend fun insert(item: CartDb)
 
-    @Transaction
-    open suspend fun upsert(items: List<ShoppingCartProductDb>) {
-        items.forEach { upsert(it) }
-    }
+    @Query("SELECT * FROM cart")
+    suspend fun getAll(): List<CartDb>
 
-    @Update
-    abstract suspend fun update(item: ShoppingCartProductDb)
+    @Query("SELECT * FROM cart")
+    fun observeAll(): Flow<List<CartDb>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    abstract suspend fun insert(item: ShoppingCartProductDb): Long
+    @Query("SELECT * FROM cart WHERE id = :id")
+    suspend fun getById(id: String): CartDb?
 
-    @Query("DELETE FROM shopping_cart_product")
+    @Query("DELETE FROM cart")
     abstract suspend fun deleteAll()
 
-    @Transaction
-    @Query("SELECT * FROM shopping_cart_product")
-    abstract suspend fun getAll(): List<ProductAndAmount>
+    @Update
+    abstract suspend fun update(product: CartDb)
 
-    @Transaction
-    @Query("SELECT * FROM shopping_cart_product")
-    abstract fun observeAll(): Flow<List<ProductAndAmount>>
+
+//    @Transaction
+//    open suspend fun upsert(item: ShoppingCartProductDb) {
+//        val rowId = insert(item)
+//        if (rowId == -1L) {
+//            update(item)
+//        }
+//    }
+//
+//    @Transaction
+//    open suspend fun upsert(items: List<ShoppingCartProductDb>) {
+//        items.forEach { upsert(it) }
+//    }
+//
+//    @Update
+//    abstract suspend fun update(item: ShoppingCartProductDb)
+//
+//    @Insert(onConflict = OnConflictStrategy.IGNORE)
+//    abstract suspend fun insert(item: ShoppingCartProductDb): Long
+//
+//    @Query("DELETE FROM shopping_cart_product")
+//    abstract suspend fun deleteAll()
+//
+//    @Transaction
+//    @Query("SELECT * FROM shopping_cart_product")
+//    abstract suspend fun getAll(): List<ProductAndAmount>
+//
+//    @Transaction
+//    @Query("SELECT * FROM shopping_cart_product")
+//    abstract fun observeAll(): Flow<List<ProductAndAmount>>
 }

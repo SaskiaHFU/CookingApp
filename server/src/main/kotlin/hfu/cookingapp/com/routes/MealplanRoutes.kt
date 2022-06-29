@@ -42,7 +42,7 @@ fun Route.addMealToPlanRouting() {
 val dailymeals = listOf(
     DailyMeals(
         day = "Monday",
-        bfName = "",
+        bfName = "Oats",
         luName = "",
         diName = "",
     ),

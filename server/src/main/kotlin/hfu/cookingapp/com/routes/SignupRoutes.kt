@@ -18,7 +18,7 @@ data class SignupRequest(
 
 @kotlinx.serialization.Serializable
 data class SignupResponse(
-    val cartId: String,
+    val userName: String,
 )
 
 fun Route.signupRouting() {
@@ -35,9 +35,9 @@ fun Route.signupRouting() {
                         UUID.randomUUID().toString(),
                         userData.userName,
                         userData.password,
-                        UUID.randomUUID().toString(),
+//                        UUID.randomUUID().toString(),
                     )?.let { newUser ->
-                        call.respond(SignupResponse(newUser.cartId))
+                        call.respond(SignupResponse(newUser.name))
                     } ?: call.respond(HttpStatusCode.InternalServerError)
                 }
             }

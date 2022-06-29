@@ -14,8 +14,8 @@ fun Route.loginRouting() {
     route("/v1/user") {
         get {
             call.principal<UserIdPrincipal>()?.name?.let { userId ->
-                userDao.userById(userId)?.cartId?.let { cartId ->
-                    call.respond(LoginResponse(cartId))
+                userDao.userById(userId)?.let { userId ->
+                    call.respond(LoginResponse(userId.id))
                 } ?: call.respond(HttpStatusCode.Unauthorized)
             } ?: call.respond(HttpStatusCode.Unauthorized)
         }
@@ -24,5 +24,5 @@ fun Route.loginRouting() {
 
 @kotlinx.serialization.Serializable
 data class LoginResponse(
-    val cartId: String,
+    val id: String,
 )

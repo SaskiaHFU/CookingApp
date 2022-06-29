@@ -16,39 +16,40 @@ import com.saskiahfu.hfu.cookingapp.feature.main.modifier
 class RecipeUI(
     val id: RecipeId,
     val name: String,
-//    @DrawableRes val img: Int?,
-//    val ingredients: List<String>,
-//    val steps: List<String>,
-//    val category: String,
+   @DrawableRes val img: Int?,
+    val img_url: String?,
+    val ingredients: String,
+    val steps: String,
+    val category: String,
     val sourceName: String,
     val sourceUri: String,
 )
 
-val allRecCat = listOf(
-    "Breakfast", "Lunch", "Dinner", "Kids", "Drinks"
-)
-
-@Composable
-fun printRecipeCategories() {
-    Row(
-        modifier
-            .horizontalScroll(rememberScrollState())
-            .padding(categoryPadding),
-        horizontalArrangement = Arrangement.spacedBy(15.dp),
-    ) {
-        for (cats in allRecCat) {
-
-            TextButton(
-                onClick = {
-                    //TODO Code Choose Month Button action
-                    //Give attribute active as class parameter
-                },
-                ) {
-                Text(
-                    text = cats,
-                    style = MaterialTheme.typography.body1,
-                    )
-            }
-        }
-    }
-}
+//val allRecCat = listOf(
+//    "Breakfast", "Lunch", "Dinner", "Kids", "Drinks"
+//)
+//
+//@Composable
+//fun printRecipeCategories() {
+//    Row(
+//        modifier
+//            .horizontalScroll(rememberScrollState())
+//            .padding(categoryPadding),
+//        horizontalArrangement = Arrangement.spacedBy(15.dp),
+//    ) {
+//        for (cats in allRecCat) {
+//
+//            TextButton(
+//                onClick = {
+//                    //TODO Code Choose Month Button action
+//                    //Give attribute active as class parameter
+//                },
+//                ) {
+//                Text(
+//                    text = cats,
+//                    style = MaterialTheme.typography.body1,
+//                    )
+//            }
+//        }
+//    }
+//}

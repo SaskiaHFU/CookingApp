@@ -1,8 +1,14 @@
 <resources>
     <string name="app_name">Cooking App</string>
+    <string name="save_item">Save</string>
+    <string name="clear">Clear Text</string>
+    <string name="type_here">Type here ... </string>
+
     <!--  Nav  -->
-    <string name="recipes_title_navigation">Recipes</string>
-    <string name="cart_title_navigation">Cart</string>
+    <string name="recipes_title_navigation">My Recipes</string>
+    <string name="login_title_navigation">Login</string>
+    <string name="signup_title_navigation">Signup</string>
+    <string name="cart_title_navigation">My Cart</string>
     <string name="linklist_title_navigation">Try Out</string>
     <string name="calendar_title_navigation">Seasons</string>
     <string name="home_title_navigation">Hey you,</string>
@@ -16,16 +22,44 @@
     <string name="cart_cta_pay">Pay Now</string>
 
     <!--    Login Strings-->
+    <string name="login">Login</string>
     <string name="login_input_email">Email</string>
     <string name="login_input_password">Password</string>
     <string name="login_button_signup">Sign Up</string>
     <string name="login_button_signin">Sign In</string>
     <string name="login_button_forgot_password">Forgot Password?</string>
 
+    <!--    SignUp Strings -->
+    <string name="signup">Sign Up</string>
+    <string name="signup_close">Close Sign Up</string>
+    <string name="signup_input_email">Email</string>
+    <string name="signup_input_name">Name</string>
+    <string name="signup_input_password">Password</string>
+    <string name="signup_input_repeat_p">Repeat Password</string>
+
     <!--  Profil  -->
     <string name="profile_title_navigation">Profile</string>
     <string name="profile_button_logout">Logout</string>
 
     <!--  Recipes  -->
+    <string name="recipe_popup_title">Great!</string>
+    <string name="recipe_popup_text">Your recipe has been added.</string>
+
+    <string name="recipe_upload_img">Upload Image</string>
     <string name="recipe_button_add">Add Recipe</string>
+    <string name="recipe_add_title">Add Title</string>
+    <string name="recipe_add_category">Choose Category</string>
+    <string name="recipe_add_ingredients">Add Ingredients</string>
+    <string name="recipe_add_steps">Add Steps</string>
+    <string name="recipe_add_meal_week">Add to meal week</string>
+    <string name="recipe_add_link">Add Source Link</string>
+    <string name="recipe_add_source_name">Add Name</string>
+    <string name="recipe_add_source_uri">Add Link</string>
+
+    <!--    Mealplan-->
+    <string name="mealplan_bf">Breakfast: </string>
+    <string name="mealplan_lu">Lunch: </string>
+    <string name="mealplan_di">Dinner: </string>
+
+
 </resources>

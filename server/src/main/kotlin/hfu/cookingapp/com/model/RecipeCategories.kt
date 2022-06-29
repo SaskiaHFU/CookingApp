@@ -11,28 +11,25 @@ import org.jetbrains.exposed.sql.select
 data class RecipeCategory(
     val id: String,
     val name: String,
-    val recipes: String,
 )
 
 object RecipeCategories : Table() {
     val id = varchar("id", 128)
     val name = varchar("name", 128)
-    val recipes = varchar("recipes", 128)
     override val primaryKey = PrimaryKey(id)
 }
 
-interface RecipeCatItemDao {
+interface RecipeCatDao {
     suspend fun itemsByCatId(id: String): List<RecipeCategory>
     suspend fun addRecipeCatItem(
         id: String,
         name: String,
-        recipes: String,
     ): RecipeCategory?
 
-    suspend fun deleteAllByCartId(id: String): Int
+    suspend fun deleteAllByCatId(id: String): Int
 }
 
-class RecipeCatItemDaoImpl : RecipeCatItemDao {
+class RecipeCatDaoImpl : RecipeCatDao {
 
     override suspend fun itemsByCatId(id: String): List<RecipeCategory> = DatabaseFactory.dbQuery {
         RecipeCategories.select {
@@ -40,26 +37,24 @@ class RecipeCatItemDaoImpl : RecipeCatItemDao {
         }.map(::resultRowToRecipeCat)
     }
 
-    override suspend fun addRecipeCatItem(id: String, name: String, recipes: String): RecipeCategory? =
+    override suspend fun addRecipeCatItem(id: String, name: String): RecipeCategory? =
         dbQuery {
             val insertStatement = RecipeCategories.insert {
                 it[RecipeCategories.id] = id
                 it[RecipeCategories.name] = name
-                it[RecipeCategories.recipes] = recipes
             }
             insertStatement.resultedValues?.singleOrNull()?.let(::resultRowToRecipeCat)
         }
 
-    override suspend fun deleteAllByCartId(id: String): Int {
+    override suspend fun deleteAllByCatId(id: String): Int {
         TODO("Not yet implemented")
     }
 
     private fun resultRowToRecipeCat(row: ResultRow) = RecipeCategory(
         id = row[RecipeCategories.id],
         name = row[RecipeCategories.name],
-        recipes = row[RecipeCategories.recipes],
     )
 
 }
 
-val recipeCatDao: RecipeCatItemDao = RecipeCatItemDaoImpl()
+val recipeCatDao: RecipeCatDao = RecipeCatDaoImpl()

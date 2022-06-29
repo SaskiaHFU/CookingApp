@@ -1,8 +1,6 @@
 package hfu.cookingapp.com.routes
 
-import hfu.cookingapp.com.model.recipeCatDao
-import hfu.cookingapp.com.model.shoppingCartItemDao
-import hfu.cookingapp.com.model.userDao
+import hfu.cookingapp.com.model.*
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -14,16 +12,13 @@ import java.util.*
 private data class AddRecipeCatRequest(
     val id: String,
     val name: String,
-    val recipes: String
 )
 
 fun Route.recipeCatRouting() {
-    route("/v1/recipeCategory/{id}") {
-//        get {
-//            call.respond(
-//                recipeCatDao.itemsByCatId(id)
-//            )
-//        }
+    route("/v1/recipeCategory") {
+        get {
+            call.respond(recipe_categories)
+        }
 
         post {
             val recipeCatData = call.receive<AddRecipeCatRequest>()
@@ -36,7 +31,6 @@ fun Route.recipeCatRouting() {
                     recipeCatDao.addRecipeCatItem(
                         UUID.randomUUID().toString(),
                         recipeCatData.name,
-                        recipeCatData.recipes,
                     )?.let { _ ->
                         call.respond(HttpStatusCode.OK)
                     } ?: call.respond(HttpStatusCode.InternalServerError)
@@ -51,3 +45,26 @@ fun Route.recipeCatRouting() {
 //            }
     }
 }
+
+val recipe_categories = listOf(
+    RecipeCategory(
+        id = "0",
+        name = "Breakfast"
+    ),
+    RecipeCategory(
+        id = "1",
+        name = "Lunch"
+    ),
+    RecipeCategory(
+        id = "3",
+        name = "Dinner"
+    ),
+    RecipeCategory(
+        id = "4",
+        name = "Kids"
+    ),
+    RecipeCategory(
+        id = "5",
+        name = "Drinks"
+    ),
+)

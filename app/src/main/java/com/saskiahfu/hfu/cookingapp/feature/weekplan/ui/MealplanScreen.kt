@@ -15,8 +15,10 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.saskiahfu.hfu.cookingapp.R
 import com.saskiahfu.hfu.cookingapp.feature.main.contentPadding
 import com.saskiahfu.hfu.cookingapp.feature.main.menuIcon
 import com.saskiahfu.hfu.cookingapp.feature.main.modifier
@@ -35,8 +37,8 @@ private fun MealplanScreenUI(meals: List<MealplanUI>) {
     ) {
 
         //Call Header
-        menuIcon()
-        pageDirection("My Week")
+//        menuIcon()
+//        pageDirection("My Week")
 
         //Content
         Box(
@@ -53,8 +55,8 @@ private fun MealplanScreenUI(meals: List<MealplanUI>) {
             }
         }
     }
-    // Button Bottom
 
+    // Button Clear
     Column(
         modifier
             .fillMaxHeight(),
@@ -69,6 +71,7 @@ private fun MealplanScreenUI(meals: List<MealplanUI>) {
             Button(
                 onClick = {
                     //TODO Code Delete clicked Items Button action
+
                 },
                 modifier
                     .clip(
@@ -86,7 +89,7 @@ private fun MealplanScreenUI(meals: List<MealplanUI>) {
                 colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.surface),
             ) {
                 Text(
-                    text = "Clear Week",
+                    text = stringResource(R.string.clear),
                     style = MaterialTheme.typography.button,
                 )
             }

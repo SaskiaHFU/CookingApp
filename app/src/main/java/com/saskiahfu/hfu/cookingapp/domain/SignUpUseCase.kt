@@ -4,8 +4,7 @@ import com.saskiahfu.hfu.cookingapp.data.LoginState
 import com.saskiahfu.hfu.cookingapp.data.UserSettingsRepository
 import com.saskiahfu.hfu.cookingapp.data.network.SignUpRequestDto
 import com.saskiahfu.hfu.cookingapp.data.network.WebService
-import com.saskiahfu.hfu.cookingapp.domain.downloadUseCase.DownloadProductsUseCase
-import com.saskiahfu.hfu.cookingapp.domain.model.ShoppingCartId
+import com.saskiahfu.hfu.cookingapp.domain.downloadUseCase.*
 import java.util.Base64
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
@@ -15,6 +14,10 @@ class SignUpUseCase @Inject constructor(
     private val webService: WebService,
     private val userSettingsRepository: UserSettingsRepository,
     private val downloadProductsUseCase: DownloadProductsUseCase,
+    private val downloadCartUseCase: DownloadCartUseCase,
+    private val downloadRecipesUseCase: DownloadRecipesUseCase,
+    private val downloadMealsUseCase: DownloadMealsUseCase,
+    private val downloadRecipeCategoriesUseCase: DownloadRecipeCategoriesUseCase
 ) {
     suspend operator fun invoke(username: String, password: String) =
         withContext(Dispatchers.Default) {
@@ -33,11 +36,15 @@ class SignUpUseCase @Inject constructor(
             )
             userSettingsRepository.updateSettings {
                 it.copy(
-                    cartId = ShoppingCartId(response.cartId),
+//                    cartId = ShoppingCartId(response.cartId),
                 )
             }
 
             downloadProductsUseCase()
+            downloadRecipesUseCase()
+            downloadMealsUseCase()
+            downloadRecipeCategoriesUseCase()
+
 
             userSettingsRepository.updateSettings {
                 it.copy(

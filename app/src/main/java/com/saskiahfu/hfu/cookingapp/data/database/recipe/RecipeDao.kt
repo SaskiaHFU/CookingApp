@@ -9,6 +9,9 @@ interface RecipeDao {
     @Insert
     suspend fun insert(recipes: RecipeDb)
 
+    @Update
+    suspend fun update(recipes: RecipeDb)
+
     @Query("SELECT * FROM recipes")
     suspend fun getAll(): List<RecipeDb>
 

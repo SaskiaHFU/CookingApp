@@ -1,4 +1,8 @@
 package com.saskiahfu.hfu.cookingapp.domain
 
-class MealToMealplanUseCase {
-}
+//class MealToMealplanUseCase {
+//
+////    repository.get
+////    ändern
+////    repository.update
+//}

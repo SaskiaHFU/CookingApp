@@ -6,7 +6,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
+import com.saskiahfu.hfu.cookingapp.feature.main.navigation.BottomNavigationItem
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -17,28 +17,32 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
 import com.saskiahfu.hfu.cookingapp.R
-
 import com.saskiahfu.hfu.cookingapp.feature.main.contentPadding
 import com.saskiahfu.hfu.cookingapp.feature.main.modifier
 
 @Composable
-fun LoginScreen(viewModel: LoginViewModel = viewModel()) {
-    LoginScreenUi(viewModel::onLogin, viewModel::onSignUp)
+fun LoginScreen(
+    viewModel: LoginViewModel = viewModel(),
+) {
+    LoginScreenUi(viewModel::onLogin)
+//        , viewModel::onSignUp)
 }
 
 @Composable
 private fun LoginScreenUi(
     onLogin: (username: String, password: String) -> Unit,
-    onSignUp: (username: String, password: String) -> Unit,
+//    onSignUp: (username: String, password: String) -> Unit,
 ) {
+
+    val navController = rememberNavController()
+
     var userName by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -56,13 +60,11 @@ private fun LoginScreenUi(
 
         )
 
-
     Column(
         modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.End
     ) {
         Image(
-
             painter = painterResource(loginImg),
             contentDescription = "Plant",
             contentScale = ContentScale.Fit,
@@ -73,17 +75,12 @@ private fun LoginScreenUi(
         )
     }
 
-
 //    Upper Part
-    Column(
-
-    ) {
-
+    Column() {
         Column(
             modifier
                 .padding(startPadding)
         ) {
-
             Text(
                 text = "Welcome",
                 style = headings1,
@@ -98,8 +95,6 @@ private fun LoginScreenUi(
             modifier
                 .padding(contentPadding)
         ) {
-
-
             TextField(
                 value = userName,
                 onValueChange = { userName = it },
@@ -128,7 +123,6 @@ private fun LoginScreenUi(
 //Subinfo
             Row(
 //                verticalAlignment = Alignment.CenterVertically,
-
                 modifier
                     .fillMaxWidth()
                     .padding(0.dp),
@@ -147,7 +141,7 @@ private fun LoginScreenUi(
 
                 TextButton(
                     onClick = {
-                        //SignUpScreen()
+                        navController.navigate(BottomNavigationItem.Signup.routeName)
                     },
                 ) {
                     Text(
@@ -159,7 +153,7 @@ private fun LoginScreenUi(
             }
         }
 
-        //        Bottom Navbar
+// Bottom Navbar
         Column(
             modifier
                 .fillMaxHeight(),
@@ -170,7 +164,6 @@ private fun LoginScreenUi(
                 horizontalArrangement = Arrangement.End
             ) {
                 Button(
-
                     onClick = {
                         onLogin(userName, password)
                     },
@@ -194,8 +187,8 @@ private fun LoginScreenUi(
 
 }
 
-@Preview
-@Composable
-fun LoginScreen_Preview() {
-    LoginScreenUi({ _, _ -> }, { _, _ -> })
-}
+//@Preview
+//@Composable
+//fun LoginScreen_Preview() {
+//    LoginScreenUi({ _, _ -> }, { _, _ -> })
+//}

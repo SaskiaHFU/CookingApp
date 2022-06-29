@@ -4,15 +4,17 @@ package com.saskiahfu.hfu.cookingapp.domain.model
 @JvmInline
 value class MealId(val value: String)
 
-class Mealplan private constructor(
-    val day: MealId,
+data class Mealplan private constructor(
+//    val day: MealId,
+    val day: String,
     val bfName: String,
     val luName: String,
     val diName: String,
 ) {
     companion object {
         fun update(
-            day: MealId,
+//            day: MealId,
+            day: String,
             bfName: String,
             luName: String,
             diName: String,
@@ -21,7 +23,8 @@ class Mealplan private constructor(
         }
 
         fun create(
-            day: MealId,
+//            day: MealId,
+            day: String,
             bfName: String,
             luName: String,
             diName: String,

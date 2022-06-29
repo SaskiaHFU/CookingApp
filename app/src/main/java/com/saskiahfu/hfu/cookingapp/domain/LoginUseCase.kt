@@ -3,12 +3,12 @@ package com.saskiahfu.hfu.cookingapp.domain
 import android.content.Context
 import com.saskiahfu.hfu.cookingapp.data.LoginState
 import com.saskiahfu.hfu.cookingapp.data.UserSettingsRepository
+import com.saskiahfu.hfu.cookingapp.data.network.LoginResponseDto
 import com.saskiahfu.hfu.cookingapp.data.network.WebService
+import com.saskiahfu.hfu.cookingapp.domain.downloadUseCase.DownloadCartUseCase
 import com.saskiahfu.hfu.cookingapp.domain.downloadUseCase.DownloadMealsUseCase
 import com.saskiahfu.hfu.cookingapp.domain.downloadUseCase.DownloadProductsUseCase
-//import com.saskiahfu.hfu.cookingapp.domain.downloadUseCase.DownloadRecipesUseCase
-import com.saskiahfu.hfu.cookingapp.domain.downloadUseCase.DownloadShoppingCartUseCase
-import com.saskiahfu.hfu.cookingapp.domain.model.ShoppingCartId
+import com.saskiahfu.hfu.cookingapp.domain.downloadUseCase.DownloadRecipesUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.Base64
 import javax.inject.Inject
@@ -19,9 +19,10 @@ class LoginUseCase @Inject constructor(
     private val webService: WebService,
     private val userSettingsRepository: UserSettingsRepository,
     private val downloadProductsUseCase: DownloadProductsUseCase,
-    private val downloadShoppingCartUseCase: DownloadShoppingCartUseCase,
+//    private val downloadShoppingCartUseCase: DownloadShoppingCartUseCase,
+    private val downloadCartUseCase: DownloadCartUseCase,
     private val downloadMealsUseCase: DownloadMealsUseCase,
-//    private val downloadRecipesUseCase: DownloadRecipesUseCase,
+    private val downloadRecipesUseCase: DownloadRecipesUseCase,
     @ApplicationContext private val context: Context,
 ) {
 
@@ -36,18 +37,20 @@ class LoginUseCase @Inject constructor(
             )
         }
 
-        val response = webService.login()
+        val response = webService.login(
+        )
 
         userSettingsRepository.updateSettings {
             it.copy(
-                cartId = ShoppingCartId(response.cartId)
+//                cartId = ShoppingCartId(response.cartId)
             )
         }
 
         downloadProductsUseCase()
-        downloadShoppingCartUseCase()
+//        downloadShoppingCartUseCase()
+        downloadCartUseCase()
         downloadMealsUseCase()
-//        downloadRecipesUseCase()
+        downloadRecipesUseCase()
 
 
         userSettingsRepository.updateSettings {

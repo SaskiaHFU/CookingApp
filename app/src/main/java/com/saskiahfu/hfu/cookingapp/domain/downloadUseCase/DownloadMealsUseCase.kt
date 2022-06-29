@@ -16,7 +16,8 @@ class DownloadMealsUseCase @Inject constructor(
         kotlin.runCatching {
             webService.getMeals().mapNotNull {
                 Mealplan.create(
-                    MealId(it.day),
+//                    MealId(it.day),
+                    it.day,
                     it.bfName,
                     it.luName,
                     it.diName,

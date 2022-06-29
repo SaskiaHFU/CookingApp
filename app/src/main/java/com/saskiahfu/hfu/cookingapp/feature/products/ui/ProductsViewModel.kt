@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.saskiahfu.hfu.cookingapp.data.network.WebService
-import com.saskiahfu.hfu.cookingapp.domain.BuyProductUseCase
 import com.saskiahfu.hfu.cookingapp.domain.observeUseCase.ObserveProductsUseCase
 import com.saskiahfu.hfu.cookingapp.domain.model.ProductIcon
 import com.saskiahfu.hfu.cookingapp.domain.model.ProductId
@@ -19,7 +18,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class ProductsViewModel @Inject constructor(
     private val observeProducts: ObserveProductsUseCase,
-    private val buyProduct: BuyProductUseCase,
+//    private val buyProduct: BuyProductUseCase,
 ) : ViewModel() {
     fun bindUi(context: Context): LiveData<List<ProductUI>> =
         observeProducts().map {
@@ -41,7 +40,7 @@ class ProductsViewModel @Inject constructor(
 
     fun onAddProduct(productId: ProductId) {
         viewModelScope.launch {
-            buyProduct(productId)
+//            buyProduct(productId)
         }
     }
 }

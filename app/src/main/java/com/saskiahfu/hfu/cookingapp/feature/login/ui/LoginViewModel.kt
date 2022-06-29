@@ -10,15 +10,15 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val signUp: SignUpUseCase,
+//    private val signUp: SignUpUseCase,
     private val login: LoginUseCase,
 ) : ViewModel() {
 
-    fun onSignUp(username: String, password: String) {
-        viewModelScope.launch {
-            signUp(username, password)
-        }
-    }
+//    fun onSignUp(username: String, password: String) {
+//        viewModelScope.launch {
+//            signUp(username, password)
+//        }
+//    }
 
     fun onLogin(username: String, password: String) {
         viewModelScope.launch {

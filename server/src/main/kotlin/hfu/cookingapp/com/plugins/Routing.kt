@@ -12,11 +12,12 @@ fun Application.configureRouting() {
         addMealToPlanRouting()
         recipeRouting()
         recipeCatRouting()
+        cartRouting()
 
         authenticate("auth-basic") {
             loginRouting()
             productRouting()
-            shoppingCartRouting()
+//            shoppingCartRouting()
         }
     }
 }
