@@ -50,15 +50,16 @@ private fun createFileFromUri(name: String, uri: Uri, context: Context): File? {
                 ".png",
                 context.cacheDir
             )
-        FileUtils.copyInputStreamToFile(stream, file)  // Use this one import org.apache.commons.io.FileUtils
+        FileUtils.copyInputStreamToFile(
+            stream,
+            file
+        )  // Use this one import org.apache.commons.io.FileUtils
         file
     } catch (e: Exception) {
         e.printStackTrace()
         null
     }
 }
-
-
 
 @Composable
 fun AddRecipeScreen(
@@ -68,13 +69,19 @@ fun AddRecipeScreen(
 ) { //TODO weiter nav gehen
     val recipeCategories by viewModel.bindUi(LocalContext.current).observeAsState(emptyList())
     val meals by viewModelMeal.bindUi(LocalContext.current).observeAsState(emptyList())
-    AddRecipeScreenUI(viewModel::onAddRecipe, recipeCategories, meals, navController)
+    AddRecipeScreenUI(
+        viewModel::onAddRecipe,
+        viewModelMeal::onUpdateMealplan,
+        recipeCategories,
+        meals,
+        navController
+    )
 }
 
 @Composable
 private fun AddRecipeScreenUI(
     onAddRecipe: (name: String, img: String, ingredients: String, steps: String, category: String, sourceName: String, sourceUri: String) -> Unit,
-//    onUpdateMealplan: (mealName: String, time: String),
+    onUpdateMealplan: (day: String, bfName: String, luName: String, diName: String) -> Unit,
     recipeCategories: List<RecipeCategoryUI>,
     meals: List<MealplanUI>,
     navController: NavController
@@ -93,14 +100,14 @@ private fun AddRecipeScreenUI(
 
 
 //    Mealplan
-    var day = remember { mutableStateOf("") }
-    var bfName = remember { mutableStateOf("") }
-    var luName = remember { mutableStateOf("") }
-    var diName = remember { mutableStateOf("") }
+    var day by remember { mutableStateOf("") }
+    var bfName by remember { mutableStateOf("") }
+    var luName by remember { mutableStateOf("") }
+    var diName by remember { mutableStateOf("") }
 
-    val daySelected = remember { mutableStateOf(false) }
-    val timeSelected = remember { mutableStateOf(false) }
-
+    var bfSelected by remember { mutableStateOf(false) }
+    var luSelected by remember { mutableStateOf(false) }
+    var diSelected by remember { mutableStateOf(false) }
 
 //    Image Folder
     var imageUri by remember { mutableStateOf<Uri?>(null) }
@@ -123,7 +130,6 @@ private fun AddRecipeScreenUI(
     val scrollState = rememberLazyListState()
 
 
-//    Interface
     Column(
         modifier
             .fillMaxWidth()
@@ -262,9 +268,6 @@ private fun AddRecipeScreenUI(
                         }
                     }
                 }
-
-
-
                 Spacer(modifier.height(45.dp))
 // Zutaten
                 Column() {
@@ -291,9 +294,7 @@ private fun AddRecipeScreenUI(
                         )
                     )
                 }
-
                 Spacer(modifier.height(45.dp))
-
 // Steps
                 Column() {
                     Text(
@@ -319,11 +320,8 @@ private fun AddRecipeScreenUI(
                         )
                     )
                 }
-
                 Spacer(modifier.height(45.dp))
-
 //Add to Meal Week
-
                 Text(
                     text = stringResource(R.string.recipe_add_meal_week),
                     style = MaterialTheme.typography.h5,
@@ -343,11 +341,8 @@ private fun AddRecipeScreenUI(
                                 TextButton(
                                     onClick = {
                                         expandColumn = true
-                                        daySelected.value = !daySelected.value
-
-//                                        get table eintrag where day = slected day
-//                                day = me
-
+                                        day = meal.day
+                                        println(day)
                                     },
                                     colors = ButtonDefaults.buttonColors(
                                         backgroundColor =
@@ -369,7 +364,14 @@ private fun AddRecipeScreenUI(
                             Column() {
                                 TextButton(
                                     onClick = {
-                                        meal.bfName = name
+                                        bfSelected = true
+                                        bfName = if (bfSelected) {
+                                            name
+                                        } else {
+                                            meal.bfName
+                                        }
+
+                                        println(meal.bfName)
                                     },
                                     colors = ButtonDefaults.buttonColors(
                                         backgroundColor =
@@ -385,7 +387,13 @@ private fun AddRecipeScreenUI(
                                 }
                                 TextButton(
                                     onClick = {
-                                        meal.luName = name
+                                        luSelected = true
+                                        luName = if (luSelected) {
+                                            name
+                                        } else {
+                                            meal.luName
+                                        }
+                                        println(luName)
                                     },
                                     colors = ButtonDefaults.buttonColors(
                                         backgroundColor = MaterialTheme.colors.background
@@ -398,7 +406,13 @@ private fun AddRecipeScreenUI(
                                 }
                                 TextButton(
                                     onClick = {
-                                        meal.diName = name
+                                        diSelected = true
+                                        diName = if (diSelected) {
+                                            name
+                                        } else {
+                                            meal.diName
+                                        }
+                                        println(meal.diName)
                                     },
                                     colors = ButtonDefaults.buttonColors(
                                         backgroundColor = MaterialTheme.colors.background
@@ -411,10 +425,7 @@ private fun AddRecipeScreenUI(
                                 }
                             }
 //                            }
-
-
                         }
-
                     }
                 }
 
@@ -470,7 +481,7 @@ private fun AddRecipeScreenUI(
             Button(
                 onClick = {
                     onAddRecipe(name, img, ingredients, steps, category, sourceName, sourceUri)
-//                    onUpdateMealplan
+                    onUpdateMealplan(day, bfName, luName, diName)
                     showPopup = true
                 },
                 enabled = name.isNotBlank(),

@@ -10,14 +10,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role.Companion.Button
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.saskiahfu.hfu.cookingapp.R
+import com.saskiahfu.hfu.cookingapp.domain.model.CartItemId
 import com.saskiahfu.hfu.cookingapp.feature.main.modifier
 import com.saskiahfu.hfu.cookingapp.feature.main.navigation.BottomNavigationItem
 
 @Composable
-fun CartItem(item: CartItemUI) {
+fun CartItem(
+    item: CartItemUI,
+    onDeleteItemById: (CartItemId) -> Unit,
+) {
     val textStyle = MaterialTheme.typography.body2
-    var checked by remember { mutableStateOf(false) }
+    var checked
+            by
+            remember {
+                mutableStateOf(false)
+            }
+
     var delete by remember { mutableStateOf(false) }
 
     if (delete) {
@@ -35,7 +45,7 @@ fun CartItem(item: CartItemUI) {
                     checked = true
                 } else if (checked) {
                     delete = true
-                    //                TODO delete item
+                    onDeleteItemById(item.id)
                 }
             },
             colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.background),

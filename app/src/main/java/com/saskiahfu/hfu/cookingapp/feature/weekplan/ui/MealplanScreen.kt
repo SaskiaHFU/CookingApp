@@ -4,17 +4,15 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.runtime.getValue
+import androidx.compose.material.*
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -28,11 +26,19 @@ import com.saskiahfu.hfu.cookingapp.feature.main.pageDirection
 @Composable
 fun MealplanScreen(viewModel: MealplanViewModel = viewModel()) {
     val meals by viewModel.bindUi(LocalContext.current).observeAsState(emptyList())
-    MealplanScreenUI(meals)
+    MealplanScreenUI(meals, viewModel::onUpdateMealplan)
 }
 
 @Composable
-private fun MealplanScreenUI(meals: List<MealplanUI>) {
+private fun MealplanScreenUI(
+    meals: List<MealplanUI>,
+    onDeleteMealplan: (day: String, bfName: String, luName: String, diName: String) -> Unit
+) {
+    var day by remember { mutableStateOf("") }
+    var bfName by remember { mutableStateOf("") }
+    var luName by remember { mutableStateOf("") }
+    var diName by remember { mutableStateOf("") }
+
     Column(
     ) {
 
@@ -70,8 +76,11 @@ private fun MealplanScreenUI(meals: List<MealplanUI>) {
         ) {
             Button(
                 onClick = {
-                    //TODO Code Delete clicked Items Button action
-
+                    bfName = " "
+                    luName = " "
+                    diName = " "
+                    println("meals: " + bfName + luName + diName)
+                    onDeleteMealplan(day, bfName, luName, diName)
                 },
                 modifier
                     .clip(
@@ -96,3 +105,4 @@ private fun MealplanScreenUI(meals: List<MealplanUI>) {
         }
     }
 }
+

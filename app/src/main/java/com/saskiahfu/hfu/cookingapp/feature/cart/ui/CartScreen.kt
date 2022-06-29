@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.saskiahfu.hfu.cookingapp.R
+import com.saskiahfu.hfu.cookingapp.domain.model.CartItemId
 import com.saskiahfu.hfu.cookingapp.feature.main.*
 
 @Composable
@@ -29,12 +30,19 @@ fun CartScreen(
     viewModel: CartViewModel = viewModel()
 ) {
     val cartItems by viewModel.bindUi(LocalContext.current).observeAsState(emptyList())
-    CartScreenUI(viewModel::onAddCartItem, cartItems)
+    CartScreenUI(
+        viewModel::onAddCartItem,
+        viewModel::onDeleteCart,
+        viewModel::onDeleteCartItem,
+        cartItems
+    )
 }
 
 @Composable
 private fun CartScreenUI(
     onAddCartItem: (item: String) -> Unit,
+    onDeleteCart: () -> Unit,
+    onDeleteItemById: (CartItemId) -> Unit,
     items: List<CartItemUI>
 ) {
     val textStyle = MaterialTheme.typography.body2
@@ -44,8 +52,6 @@ private fun CartScreenUI(
 
     var addItem by remember { mutableStateOf(false) }
     var sent by remember { mutableStateOf(false) }
-
-
 
 
     Column(
@@ -71,7 +77,7 @@ private fun CartScreenUI(
                     state = scrollState,
                 ) {
                     items(items) { item ->
-                        CartItem(item)
+                        CartItem(item, onDeleteItemById)
                     }
                 }
                 Spacer(modifier.height(20.dp))
@@ -98,7 +104,7 @@ private fun CartScreenUI(
                             Row() {
                                 Icon(
                                     painter = painterResource(R.drawable.ic_baseline_check_24),
-                                    "Add item"
+                                    stringResource(R.string.add_item)
                                 )
                             }
                         }
@@ -118,11 +124,11 @@ private fun CartScreenUI(
                         Row() {
                             Icon(
                                 Icons.Default.Add,
-                                "Add item"
+                                stringResource(R.string.add_item)
                             )
                             Spacer(modifier.width(10.dp))
                             Text(
-                                text = "Add one more ... ",
+                                text = stringResource(R.string.add_one_more),
                                 style = textStyle
                             )
                         }
@@ -140,31 +146,11 @@ private fun CartScreenUI(
             ) {
                 Row(
                     modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.End
                 ) {
                     Button(
                         onClick = {
-                            //TODO Code Delete clicked Items Button action
-                        },
-                        modifier
-                            //.size(height = 40.dp, width = 115.dp)
-                            .clip(shape = RoundedCornerShape(topEnd = 30.dp, bottomEnd = 30.dp)),
-                        contentPadding = PaddingValues(
-                            top = 24.dp,
-                            bottom = 24.dp,
-                            start = 40.dp,
-                            end = 24.dp
-                        ),
-                        colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.surface),
-                    ) {
-                        Text(
-                            text = "Delete all clicked",
-                            style = textButton,
-                        )
-                    }
-                    Button(
-                        onClick = {
-                            //TODO Code Clear List Items Button action
+                            onDeleteCart()
                         },
                         modifier
                             .clip(
@@ -182,7 +168,7 @@ private fun CartScreenUI(
                         colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.surface),
                     ) {
                         Text(
-                            text = "Clear list",
+                            text = stringResource(R.string.clear),
                             style = textButton,
                         )
                     }

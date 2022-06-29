@@ -18,11 +18,10 @@ import javax.inject.Inject
 @HiltViewModel
 class CartViewModel @Inject constructor(
     private val observeCart: ObserveCartUseCase,
-    private  val addItem: AddItemToCartUseCase,
+    private val addItem: AddItemToCartUseCase,
     private val cartRepository: CartRepository,
     private val deleteCart: DeleteCartItemsUseCase,
 ) : ViewModel() {
-    private val mutableItem = MutableLiveData<List<CartItemUI>>(emptyList())
 
 
     fun bindUi(context: Context): LiveData<List<CartItemUI>> =
@@ -44,26 +43,18 @@ class CartViewModel @Inject constructor(
     }
 
 
-
     fun onDeleteCart() {
         viewModelScope.launch {
             val cart = cartRepository
             cart.deleteAll()
+
         }
     }
 
     fun onDeleteCartItem(id: CartItemId) {
         viewModelScope.launch {
-            val cart = cartRepository.getAllCartItems().filter {
-                it.id == id
-            }.map { item ->
-
-                CartItemUI(
-                    id = item.id,
-                    item = item.item
-                )
-            }
-            mutableItem.value = cart
+            val cart = cartRepository
+            cart.deleteById(id)
         }
     }
 }

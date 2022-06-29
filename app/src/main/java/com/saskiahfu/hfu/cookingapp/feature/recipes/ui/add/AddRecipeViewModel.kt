@@ -25,7 +25,7 @@ import javax.inject.Inject
 class AddRecipeViewModel @Inject constructor(
     private val observeRecipeCategory: ObserveRecipeCategoriesUseCase,
     private val addRecipe: AddRecipeUseCase,
-    private val updateMealplan: UpdateMealUseCase
+    private val updateMealplan: UpdateMealUseCase,
 ) : ViewModel() {
     fun bindUi(context: Context): LiveData<List<RecipeCategoryUI>> =
         observeRecipeCategory().map {
@@ -36,8 +36,6 @@ class AddRecipeViewModel @Inject constructor(
                 )
             }
         }.asLiveData()
-
-
 
     fun onAddRecipe(
         name: String,
@@ -53,18 +51,6 @@ class AddRecipeViewModel @Inject constructor(
         }
     }
 
-//erst get dann ändern dann gleiche ocject und update
-
-    fun onUpdateMealplan(
-        day: String,
-        bfName: String,
-        luName: String,
-        diName: String
-    ) {
-        viewModelScope.launch {
-            updateMealplan(day, bfName, luName, diName)
-        }
-    }
 
 }
 

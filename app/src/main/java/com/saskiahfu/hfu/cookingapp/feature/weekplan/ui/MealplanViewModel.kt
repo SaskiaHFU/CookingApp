@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MealplanViewModel @Inject constructor(
     private val observeMeals: ObserveMealplanUseCase,
-    private val updateMeals: UpdateMealUseCase
+    private val updateMealplan: UpdateMealUseCase,
 ) : ViewModel() {
     fun bindUi(context: Context): LiveData<List<MealplanUI>> =
         observeMeals().map {
@@ -29,10 +29,14 @@ class MealplanViewModel @Inject constructor(
             }
         }.asLiveData()
 
-    fun onUpdateMeal(day: String) {
+    fun onUpdateMealplan(
+        day: String,
+        bfName: String,
+        luName: String,
+        diName: String
+    ) {
         viewModelScope.launch {
-
-//            updateMeals().map {}
+            updateMealplan(day, bfName, luName, diName)
         }
     }
 

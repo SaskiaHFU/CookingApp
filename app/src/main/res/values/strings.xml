@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">Cooking App</string>
     <string name="save_item">Save</string>
-    <string name="clear">Clear Text</string>
+    <string name="clear">Clear</string>
     <string name="type_here">Type here ... </string>
+    <string name="add_item">Add item</string>
+    <string name="add_one_more">Add one more ... </string>
+    <string name="delete_all_clicked">Delete all clicked</string>
 
     <!--  Nav  -->
     <string name="recipes_title_navigation">My Recipes</string>
@@ -57,6 +60,7 @@
     <string name="recipe_add_source_uri">Add Link</string>
 
     <!--    Mealplan-->
+    <string name="mealplan_add">Add Meal</string>
     <string name="mealplan_bf">Breakfast: </string>
     <string name="mealplan_lu">Lunch: </string>
     <string name="mealplan_di">Dinner: </string>

@@ -1,13 +1,17 @@
 package com.saskiahfu.hfu.cookingapp.feature.main.navigation
 
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
 import com.saskiahfu.hfu.cookingapp.R
 
 //TODO Create Graph for Home Screen?
 
-sealed class BottomNavigationItem {
+
+sealed class BottomNavigationItem  {
     abstract val routeName: String
     abstract val title: Int
     abstract val icon: Int
+
 
     object Signup : BottomNavigationItem() {
         override val title = R.string.signup_title_navigation

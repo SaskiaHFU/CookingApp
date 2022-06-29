@@ -1,12 +1,13 @@
 package com.saskiahfu.hfu.cookingapp.feature.weekplan.ui
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.saskiahfu.hfu.cookingapp.R
@@ -24,7 +25,9 @@ fun MealplanItem(meal: MealplanUI) {
         )
     }
     //Breakfast Space
-    Row() {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Text(
             text = stringResource(R.string.mealplan_bf),
             style = textRegular,
@@ -44,7 +47,9 @@ fun MealplanItem(meal: MealplanUI) {
     }
 
     //Lunch Space
-    Row() {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Text(
             text = stringResource(R.string.mealplan_lu),
             style = textRegular, // TODO Make bold
@@ -64,7 +69,9 @@ fun MealplanItem(meal: MealplanUI) {
     }
 
     //Dinner Space
-    Row() {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Text(
             text = stringResource(R.string.mealplan_di),
             style = textRegular, // TODO Make bold

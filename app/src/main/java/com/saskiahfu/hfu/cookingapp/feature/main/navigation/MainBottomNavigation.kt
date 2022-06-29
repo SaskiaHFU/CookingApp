@@ -3,15 +3,19 @@ package com.saskiahfu.hfu.cookingapp.feature.main.navigation
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
 fun MainBottomNavigation(navController: NavController) {
-    BottomNavigation {
+    BottomNavigation (
+        backgroundColor = MaterialTheme.colors.background
+            ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
 
@@ -22,7 +26,7 @@ fun MainBottomNavigation(navController: NavController) {
             BottomNavigationItem.Links,
             BottomNavigationItem.Week,
 
-        ).forEach { navItem ->
+            ).forEach { navItem ->
             BottomNavigationItem(
                 selected = currentRoute == navItem.routeName,
                 icon = {
@@ -42,6 +46,8 @@ fun MainBottomNavigation(navController: NavController) {
                         restoreState = true
                     }
                 },
+                unselectedContentColor = Color.Black,
+                selectedContentColor = MaterialTheme.colors.surface,
             )
         }
     }

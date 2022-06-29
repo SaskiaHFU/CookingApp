@@ -60,8 +60,8 @@ interface WebService {
     @GET("v1/mealplan")
     suspend fun getMeals(): List<MealsDto>
 
-    @PUT("v1/mealplan")
-    suspend fun addMeal(@Path("day") day: String, @Body body: AddMealToPlanRequestDto)
+    @PUT("v1/mealplan/{day}")
+    suspend fun updateMeal(@Path("day") day: String, @Body body: AddMealToPlanRequestDto)
 
 
     companion object {

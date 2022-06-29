@@ -79,44 +79,6 @@ private fun MainScreenUI() {
                     }
                 },
                 navigationIcon = { MainTopNavigation(navController)},
-
-//                {
-//                    Row(
-//                        modifier
-//                            .width(60.dp)
-//                            .fillMaxHeight(),
-//                        horizontalArrangement = Arrangement.SpaceEvenly,
-//
-//                        ) {
-//                        IconButton(
-//                            onClick = {
-//                                navController.navigate(BottomNavigationItem.AddRecipe.routeName)
-//                            },
-//                        ) {
-//                            Icon(
-//                                painter = painterResource(id = R.drawable.ic_baseline_add_24),
-//                                "Add Recipe"
-//                            )
-//                        }
-//                        IconButton(
-//                            onClick = {
-//                                navigated = false
-//                                println("before: " + navigated)
-//                                if(!navigated) {
-//                                    println("clicked: " + navigated)
-//                                    navController.navigate(BottomNavigationItem.Profile.routeName)
-//                                    navigated = true
-//                                }
-//                                println("before: " + navigated)
-//                            },
-//                        ) {
-//                            Icon(
-//                                painter = painterResource(id = R.drawable.ic_baseline_person_24),
-//                                "Profil"
-//                            )
-//                        }
-//                    }
-//                },
                 backgroundColor = MaterialTheme.colors.background
             )
         },

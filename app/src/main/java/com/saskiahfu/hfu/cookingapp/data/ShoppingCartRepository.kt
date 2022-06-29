@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 class CartRepository @Inject constructor(
     private val dao: CartDao,
 ) {
-    suspend fun getAllCartItems(): List<CartItem> = dao.getAll().mapNotNull { cartItemFromDb(it)}
+    suspend fun getAllCartItems(): List<CartItem> = dao.getAll().mapNotNull { cartItemFromDb(it) }
 
     fun observeAllCartItems(): Flow<List<CartItem>> =
         dao.observeAll().map { it.mapNotNull(::cartItemFromDb) }
@@ -27,8 +27,11 @@ class CartRepository @Inject constructor(
     suspend fun deleteAll() {
         dao.deleteAll()
     }
-}
 
+    suspend fun deleteById(id: CartItemId) {
+        dao.deleteById(id.value)
+    }
+}
 
 
 //class ShoppingCartRepository @Inject constructor(

@@ -22,9 +22,9 @@ fun Route.addMealToPlanRouting() {
         get {
             call.respond(dailymeals)
         }
-
+    }
+    route("/v1/mealplan/{day}") {
         put {
-
             val meal = call.receive<AddMealToPlanRequest>()
             dailyMealsDao.addMealToMealplan(
                 day = meal.day,

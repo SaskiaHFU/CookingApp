@@ -7,6 +7,7 @@ import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
 import com.saskiahfu.hfu.cookingapp.data.database.recipe.RecipeCategoryDb
+import com.saskiahfu.hfu.cookingapp.domain.model.CartItemId
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -26,6 +27,9 @@ interface CartDao {
 
     @Query("DELETE FROM cart")
     abstract suspend fun deleteAll()
+
+    @Query("DELETE FROM cart WHERE id = :id")
+    suspend fun deleteById(id: String)
 
     @Update
     abstract suspend fun update(product: CartDb)
