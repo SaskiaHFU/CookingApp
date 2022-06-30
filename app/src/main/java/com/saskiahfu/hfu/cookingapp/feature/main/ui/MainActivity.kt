@@ -39,9 +39,10 @@ class MainActivity : ComponentActivity() {
                         MainScreen()
                     } else if (loginState != null) {
 
-//                       LoginScreen()
-//                       SignUpScreen()
-                        MainScreen()
+
+                       LoginScreen()
+//                        SignUpScreen()
+//                        MainScreen()
 
 //                        if (loginState is LoginState.LoggingIn) {
 //                            CircularProgressIndicator()

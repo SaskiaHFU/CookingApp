@@ -28,7 +28,6 @@ import com.saskiahfu.hfu.cookingapp.feature.main.signInPadding
 @Composable
 fun SignUpScreen(
     viewModel: SignUpViewModel = viewModel(),
-
     ) {
     SignUpScreenUi(viewModel::onSignUp)
 }
@@ -36,7 +35,6 @@ fun SignUpScreen(
 @Composable
 fun SignUpScreenUi(
     onSignUp: (username: String, password: String) -> Unit,
-
     ) {
 
     val navController = rememberNavController()
@@ -63,11 +61,13 @@ fun SignUpScreenUi(
                 text = stringResource(R.string.signup),
                 style = MaterialTheme.typography.h1,
             )
-
             IconButton(
                 onClick = {
-                    //text.value = "Refresh clicked. "
-                    navController.navigate(BottomNavigationItem.Login.routeName) //TODO geht nicht
+                    navController.navigate("login") {
+                        popUpTo("signup") {
+                            inclusive = true
+                        }
+                    }
                 },
             ) {
                 Icon(
