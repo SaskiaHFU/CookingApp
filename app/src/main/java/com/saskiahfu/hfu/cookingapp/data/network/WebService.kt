@@ -1,8 +1,6 @@
 package com.saskiahfu.hfu.cookingapp.data.network
 
 
-import com.saskiahfu.hfu.cookingapp.domain.model.RecipeCategory
-import com.saskiahfu.hfu.cookingapp.domain.model.RecipeImg
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import retrofit2.http.Body
@@ -55,6 +53,9 @@ interface WebService {
 
     @POST("v1/recipes")
     suspend fun addRecipe(@Body request: AddRecipeRequestDto)
+
+    @POST("v1/recipeCategory")
+    suspend fun addRecipeCategory(@Body request: AddRecipeCatRequestDto)
 
     //    Mealplan
     @GET("v1/mealplan")
@@ -153,6 +154,11 @@ data class AddRecipeRequestDto(
 @Serializable
 data class RecipeCategoryDto(
     val id: String,
+    val name: String,
+)
+
+@Serializable
+data class AddRecipeCatRequestDto(
     val name: String,
 )
 

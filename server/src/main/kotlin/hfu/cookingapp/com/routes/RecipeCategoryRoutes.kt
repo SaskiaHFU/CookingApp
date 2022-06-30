@@ -10,7 +10,6 @@ import java.util.*
 
 @kotlinx.serialization.Serializable
 private data class AddRecipeCatRequest(
-    val id: String,
     val name: String,
 )
 
@@ -25,16 +24,12 @@ fun Route.recipeCatRouting() {
             if (recipeCatData.name.isBlank()) {
                 call.respond(HttpStatusCode.BadRequest)
             } else {
-                if (recipeCatDao.itemsByCatId(recipeCatData.name) != null) {
-                    call.respond(HttpStatusCode.BadRequest, "Category already exists")
-                } else {
-                    recipeCatDao.addRecipeCatItem(
-                        UUID.randomUUID().toString(),
-                        recipeCatData.name,
-                    )?.let { _ ->
-                        call.respond(HttpStatusCode.OK)
-                    } ?: call.respond(HttpStatusCode.InternalServerError)
-                }
+                recipeCatDao.addRecipeCatItem(
+                    UUID.randomUUID().toString(),
+                    recipeCatData.name,
+                )?.let { _ ->
+                    call.respond(HttpStatusCode.OK)
+                } ?: call.respond(HttpStatusCode.InternalServerError)
             }
         }
 

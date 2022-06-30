@@ -34,7 +34,8 @@ fun MainNavigationGraph(navController: NavHostController) {
 
         composable(BottomNavigationItem.RecipeSingle.routeName) {
             val vm = hiltViewModel<SingleRecipeViewModel>()
-            SingleRecipeScreen(vm, navController)
+            val vmM = hiltViewModel<MealplanViewModel>()
+            SingleRecipeScreen(vm, vmM, navController)
         }
 
         composable(BottomNavigationItem.Profile.routeName) {

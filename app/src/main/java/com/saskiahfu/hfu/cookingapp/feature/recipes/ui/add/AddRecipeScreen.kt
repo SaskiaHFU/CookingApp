@@ -96,6 +96,8 @@ private fun AddRecipeScreenUI(
 
 
     var showPopup by remember { mutableStateOf(false) }
+    var expandColumn by remember { mutableStateOf(false) }
+
     val catSelected = remember { mutableStateOf(false) }
 
 
@@ -332,7 +334,6 @@ private fun AddRecipeScreenUI(
                     state = scrollState,
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    var expandColumn = false
 
                     items(meals) { meal ->
                         Column() {
@@ -342,7 +343,8 @@ private fun AddRecipeScreenUI(
                                     onClick = {
                                         expandColumn = true
                                         day = meal.day
-                                        println(day)
+                                        println(expandColumn)
+
                                     },
                                     colors = ButtonDefaults.buttonColors(
                                         backgroundColor =
@@ -356,77 +358,78 @@ private fun AddRecipeScreenUI(
                                         text = meal.day,
                                         style = MaterialTheme.typography.body1
                                     )
-//                            UpdateMealplanItem(item)
                                 }
                             }
 
-//                            if (expandColumn) {
-                            Column() {
-                                TextButton(
-                                    onClick = {
-                                        bfSelected = true
-                                        bfName = if (bfSelected) {
-                                            name
-                                        } else {
-                                            meal.bfName
-                                        }
+                            if (expandColumn) {
+                                Column() {
+                                    TextButton(
+                                        onClick = {
+                                            bfSelected = true
+                                            bfName = if (bfSelected) {
+                                                name
+                                            } else {
+                                                meal.bfName
+                                            }
 
-                                        println(meal.bfName)
-                                    },
-                                    colors = ButtonDefaults.buttonColors(
-                                        backgroundColor =
+                                            println(meal.bfName)
+                                        },
+                                        colors = ButtonDefaults.buttonColors(
+                                            backgroundColor =
 //            if (clicked) MaterialTheme.colors.surface
 //            else
-                                        MaterialTheme.colors.background
-                                    ),
-                                ) {
-                                    Text(
-                                        text = "Breakfast",
-                                        style = MaterialTheme.typography.body1
-                                    )
-                                }
-                                TextButton(
-                                    onClick = {
-                                        luSelected = true
-                                        luName = if (luSelected) {
-                                            name
-                                        } else {
-                                            meal.luName
-                                        }
-                                        println(luName)
-                                    },
-                                    colors = ButtonDefaults.buttonColors(
-                                        backgroundColor = MaterialTheme.colors.background
-                                    ),
-                                ) {
-                                    Text(
-                                        text = "Lunch",
-                                        style = MaterialTheme.typography.body1
-                                    )
-                                }
-                                TextButton(
-                                    onClick = {
-                                        diSelected = true
-                                        diName = if (diSelected) {
-                                            name
-                                        } else {
-                                            meal.diName
-                                        }
-                                        println(meal.diName)
-                                    },
-                                    colors = ButtonDefaults.buttonColors(
-                                        backgroundColor = MaterialTheme.colors.background
-                                    ),
-                                ) {
-                                    Text(
-                                        text = "Dinner",
-                                        style = MaterialTheme.typography.body1
-                                    )
+                                            MaterialTheme.colors.background
+                                        ),
+                                    ) {
+                                        Text(
+                                            text = "Breakfast",
+                                            style = MaterialTheme.typography.body1
+                                        )
+                                    }
+                                    TextButton(
+                                        onClick = {
+                                            luSelected = true
+                                            luName = if (luSelected) {
+                                                name
+                                            } else {
+                                                meal.luName
+                                            }
+                                            println(luName)
+                                        },
+                                        colors = ButtonDefaults.buttonColors(
+                                            backgroundColor = MaterialTheme.colors.background
+                                        ),
+                                    ) {
+                                        Text(
+                                            text = "Lunch",
+                                            style = MaterialTheme.typography.body1
+                                        )
+                                    }
+                                    TextButton(
+                                        onClick = {
+                                            diSelected = true
+                                            diName = if (diSelected) {
+                                                name
+                                            } else {
+                                                meal.diName
+                                            }
+                                            println(meal.diName)
+                                        },
+                                        colors = ButtonDefaults.buttonColors(
+                                            backgroundColor = MaterialTheme.colors.background
+                                        ),
+                                    ) {
+                                        Text(
+                                            text = "Dinner",
+                                            style = MaterialTheme.typography.body1
+                                        )
+                                    }
                                 }
                             }
-//                            }
                         }
                     }
+
+
                 }
 
 //Source

@@ -6,6 +6,7 @@
     <string name="add_item">Add item</string>
     <string name="add_one_more">Add one more ... </string>
     <string name="delete_all_clicked">Delete all clicked</string>
+    <string name="save_changes">Save changes</string>
 
     <!--  Nav  -->
     <string name="recipes_title_navigation">My Recipes</string>

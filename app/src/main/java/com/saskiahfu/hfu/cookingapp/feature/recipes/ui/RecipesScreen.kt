@@ -8,21 +8,27 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.saskiahfu.hfu.cookingapp.R
 import com.saskiahfu.hfu.cookingapp.feature.main.*
 import com.saskiahfu.hfu.cookingapp.feature.main.navigation.BottomNavigationItem
 import com.saskiahfu.hfu.cookingapp.feature.recipes.ui.categories.RecipeCategoriesViewModel
 import com.saskiahfu.hfu.cookingapp.feature.recipes.ui.categories.RecipeCategoryItem
 import com.saskiahfu.hfu.cookingapp.feature.recipes.ui.categories.RecipeCategoryUI
+
 
 var singleRecipeID = ""
 
@@ -30,7 +36,6 @@ var singleRecipeID = ""
 fun RecipesScreen(
     viewModel: RecipesViewModel = viewModel(),
     viewModelCat: RecipeCategoriesViewModel = viewModel(),
-//    viewModelSingle: SingleRecipesViewModel = viewModel(),
     navController: NavController
 ) {
     val recipe by viewModel.bindUi(LocalContext.current).observeAsState(emptyList())
@@ -40,7 +45,7 @@ fun RecipesScreen(
         recipe,
         recipeCategories,
         viewModel::onCategorySelect,
-//        viewModelSingle::onSelectedRecipe,
+        viewModelCat::onAddCategory,
         navController
     )
 }
@@ -50,7 +55,7 @@ private fun RecipeScreenUI(
     recipes: List<RecipeUI>,
     recipe_categories: List<RecipeCategoryUI>,
     onClick: (String, Context) -> Unit,
-//    onRecipeSelect: (String) -> Unit,
+    onAddCategory: (String) -> Unit,
     navController: NavController
 ) {
 
@@ -58,27 +63,85 @@ private fun RecipeScreenUI(
     val scrollState = rememberLazyListState()
     val context = LocalContext.current
 
+    var showPopup by remember { mutableStateOf(false) }
+    var categoryName by remember { mutableStateOf("") }
+
+    if (showPopup) {
+        AlertDialog(
+            onDismissRequest = {
+                showPopup = false
+            },
+            dismissButton = {
+                Button(
+                    onClick = {
+                        showPopup = false
+                    },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.background)
+                )
+                { Text("Don't save", modifier.background(MaterialTheme.colors.background)) }
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        onAddCategory(categoryName)
+                        showPopup = false
+                    },
+                    colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.background)
+                )
+                { Text(text = "Save") }
+            },
+
+            title = {
+                Text(
+                    text = "What's your category? ",
+                    style = MaterialTheme.typography.body1,
+                )
+            },
+            text = {
+                TextField(
+                    value = categoryName,
+                    onValueChange = { categoryName = it },
+                    singleLine = true,
+                    placeholder = { Text(stringResource(R.string.type_here)) },
+                    colors = TextFieldDefaults.textFieldColors(
+                        backgroundColor = MaterialTheme.colors.surface
+                    )
+                )
+            }
+        )
+
+    }
+
+
     Column() {
-//Call Header
-//        menuIcon()
-//        Row(
-//            modifier.fillMaxWidth(),
-//            horizontalArrangement = Arrangement.SpaceBetween,
-//            verticalAlignment = Alignment.CenterVertically
-//        ) {
-//            pageDirection("My Recipes")
-//        }
 
 //Categories
-        LazyRow(
-            modifier.padding(categoryPadding),
-            state = scrollState,
-            horizontalArrangement = Arrangement.spacedBy(15.dp)
-        ) {
-            items(recipe_categories) { cats ->
-                RecipeCategoryItem(cats, onClick)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Row() {
+                IconButton(
+                    onClick = {
+                        showPopup = true
+                    },
+                    modifier.size(25.dp)
+                ) {
+                    Icon(
+                        Icons.Default.Add,
+                        contentDescription = "Add Meal",
+                        tint = MaterialTheme.colors.secondary,
+                    )
+                }
+            }
+            LazyRow(
+                modifier.padding(categoryPadding),
+                state = scrollState,
+                horizontalArrangement = Arrangement.spacedBy(15.dp)
+            ) {
+                items(recipe_categories) { cats ->
+                    RecipeCategoryItem(cats, onClick)
+                }
             }
         }
+
 
 //Content
         Box(

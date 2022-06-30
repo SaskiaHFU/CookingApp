@@ -30,9 +30,6 @@ fun CartItem(
 
     var delete by remember { mutableStateOf(false) }
 
-    if (delete) {
-        println("delete")
-    }
 
     Row(
         modifier.fillMaxSize(),
@@ -45,6 +42,10 @@ fun CartItem(
                     checked = true
                 } else if (checked) {
                     delete = true
+                    checked = false
+                }
+
+                if (delete) {
                     onDeleteItemById(item.id)
                 }
             },

@@ -2,8 +2,11 @@ package com.saskiahfu.hfu.cookingapp.feature.main.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -40,47 +43,59 @@ private fun MainScreenUI() {
 
             TopAppBar(
                 title = {
-                    Row(
-                        modifier
-                            .padding(start = 30.dp, end = 30.dp)
-                            .height(60.dp)
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        when (currentRoute) {
-                            Cart.routeName -> Text(
-                                text = stringResource(Cart.title), style = font
-                            )
-                            BottomNavigationItem.Recipes.routeName -> Text(
-                                text = stringResource(BottomNavigationItem.Recipes.title),
-                                style = font
-                            )
-                            BottomNavigationItem.Links.routeName -> Text(
-                                text = stringResource(BottomNavigationItem.Links.title),
-                                style = font
-                            )
-                            BottomNavigationItem.Week.routeName -> Text(
-                                text = stringResource(BottomNavigationItem.Week.title),
-                                style = font
-                            )
-                            BottomNavigationItem.Home.routeName -> Text(
-                                text = stringResource(BottomNavigationItem.Home.title),
-                                style = font
-                            )
-                            BottomNavigationItem.Profile.routeName -> Text(
-                                text = stringResource(BottomNavigationItem.Profile.title),
-                                style = font
-                            )
-                            BottomNavigationItem.AddRecipe.routeName -> Text(
-                                text = stringResource(BottomNavigationItem.AddRecipe.title),
-                                style = font
-                            )
-                        }
+                    when (currentRoute) {
+                        Cart.routeName -> Text(
+                            text = stringResource(Cart.title), style = font
+                        )
+                        BottomNavigationItem.Recipes.routeName -> Text(
+                            text = stringResource(BottomNavigationItem.Recipes.title),
+                            style = font
+                        )
+                        BottomNavigationItem.Links.routeName -> Text(
+                            text = stringResource(BottomNavigationItem.Links.title),
+                            style = font
+                        )
+                        BottomNavigationItem.Week.routeName -> Text(
+                            text = stringResource(BottomNavigationItem.Week.title),
+                            style = font
+                        )
+                        BottomNavigationItem.Home.routeName -> Text(
+                            text = stringResource(BottomNavigationItem.Home.title),
+                            style = font
+                        )
+                        BottomNavigationItem.Profile.routeName -> Text(
+                            text = stringResource(BottomNavigationItem.Profile.title),
+                            style = font
+                        )
+                        BottomNavigationItem.AddRecipe.routeName -> Text(
+                            text = stringResource(BottomNavigationItem.AddRecipe.title),
+                            style = font
+                        )
+                        BottomNavigationItem.RecipeSingle.routeName -> IconButton(
+                                        onClick = {
+                                            navController.popBackStack()
+                                                  },
+                                        modifier.padding(start = 15.dp, top = 20.dp),
+                                    ) {
+                                        Icon(
+                                            Icons.Filled.ArrowBack,
+                                            contentDescription = "Go Back",
+                                            modifier.size(40.dp)
+                                        )
+                                    }
+
+
                     }
                 },
-                navigationIcon = { MainTopNavigation(navController)},
-                backgroundColor = MaterialTheme.colors.background
-            )
+
+                navigationIcon = {
+                    if (BottomNavigationItem.RecipeSingle.routeName != currentRoute) {
+                        MainTopNavigation(navController)
+                    }
+                },
+                backgroundColor = MaterialTheme.colors.background,
+
+                )
         },
         bottomBar = { MainBottomNavigation(navController) }
     ) { innerPadding ->
@@ -89,9 +104,3 @@ private fun MainScreenUI() {
         }
     }
 }
-
-//@Composable
-//@Preview
-//fun MainScreen_Preview() {
-//    MainScreenUI(42)
-//}
