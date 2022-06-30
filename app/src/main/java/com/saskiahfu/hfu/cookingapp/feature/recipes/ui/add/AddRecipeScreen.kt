@@ -145,11 +145,21 @@ private fun AddRecipeScreenUI(
                 onDismissRequest = {
                     showPopup = false
                     navController.navigate(BottomNavigationItem.Recipes.routeName)
+                    navController.navigate(BottomNavigationItem.Recipes.routeName) {
+                        popUpTo(BottomNavigationItem.AddRecipe.routeName) {
+                            inclusive = true
+                        }
+                    }
                 },
                 confirmButton = {
                     TextButton(onClick = {
                         showPopup = false
-                        navController.navigate(BottomNavigationItem.Recipes.routeName)
+//                        navController.navigate(BottomNavigationItem.Recipes.routeName)
+                        navController.navigate(BottomNavigationItem.Recipes.routeName) {
+                            popUpTo(BottomNavigationItem.AddRecipe.routeName) {
+                                inclusive = true
+                            }
+                        }
                     })
                     { Text(text = "OK") }
                 },

@@ -12,9 +12,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.saskiahfu.hfu.cookingapp.R
@@ -72,20 +74,19 @@ private fun MainScreenUI() {
                             style = font
                         )
                         BottomNavigationItem.RecipeSingle.routeName -> IconButton(
-                                        onClick = {
+                            onClick = {
                                             navController.popBackStack()
-                                                  },
-                                        modifier.padding(start = 15.dp, top = 20.dp),
-                                    ) {
-                                        Icon(
-                                            Icons.Filled.ArrowBack,
-                                            contentDescription = "Go Back",
-                                            modifier.size(40.dp)
-                                        )
-                                    }
-
-
+                            },
+                            modifier.padding(start = 15.dp, top = 20.dp),
+                        ) {
+                            Icon(
+                                Icons.Filled.ArrowBack,
+                                contentDescription = "Go Back",
+                                modifier.size(40.dp)
+                            )
+                        }
                     }
+
                 },
 
                 navigationIcon = {

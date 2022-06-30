@@ -153,7 +153,13 @@ private fun RecipeScreenUI(
                     Button(
                         onClick = {
 //                            val name = recipe.name.lowercase().replace(" ", "")
-                            navController.navigate(BottomNavigationItem.RecipeSingle.routeName)
+//                            navController.navigate(BottomNavigationItem.RecipeSingle.routeName)
+                            navController.navigate(BottomNavigationItem.RecipeSingle.routeName) {
+                                popUpTo(BottomNavigationItem.Recipes.routeName) {
+                                    inclusive = true
+                                }
+                            }
+
                             singleRecipeID = recipe.id.value
 
 //                            val currentRoute =
