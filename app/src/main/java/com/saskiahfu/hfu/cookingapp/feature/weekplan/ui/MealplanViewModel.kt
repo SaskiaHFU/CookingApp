@@ -39,5 +39,4 @@ class MealplanViewModel @Inject constructor(
             updateMealplan(day, bfName, luName, diName)
         }
     }
-
 }

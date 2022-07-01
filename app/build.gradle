@@ -28,24 +28,29 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
-    }
-    buildFeatures {
-        compose true
     }
 
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
     }
+
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
+    }
+
+    buildFeatures {
+        compose true
+        viewBinding true
     }
 }
 
@@ -87,4 +92,15 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.0.0-rc01")
     implementation "commons-io:commons-io:2.11.0"
 
+    def camerax_version = "1.1.0-beta01"
+    implementation "androidx.camera:camera-core:${camerax_version}"
+    implementation "androidx.camera:camera-camera2:${camerax_version}"
+    implementation "androidx.camera:camera-lifecycle:${camerax_version}"
+    implementation "androidx.camera:camera-video:${camerax_version}"
+
+    implementation "androidx.camera:camera-view:${camerax_version}"
+    implementation "androidx.camera:camera-extensions:${camerax_version}"
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    // To use constraintlayout in compose
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 }

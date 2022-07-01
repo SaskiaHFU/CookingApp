@@ -14,6 +14,11 @@ private data class AddCartItemRequest(
     val item: String,
 )
 
+@kotlinx.serialization.Serializable
+private data class DeleteCartItemRequest(
+    val id: String,
+)
+
 fun Route.cartRouting() {
 
     route("/v1/cart") {
@@ -34,6 +39,22 @@ fun Route.cartRouting() {
                     call.respond(HttpStatusCode.OK)
                 } ?: call.respond(HttpStatusCode.InternalServerError)
             }
+        }
+
+        delete {
+            cartDao.deleteAll()
+        }
+    }
+
+    route("/v1/cart/{id}") {
+        delete {
+            val id = call.receive<DeleteCartItemRequest>()
+            cartDao.deleteAllByCartId(
+                id.id
+            ).let { _ ->
+                call.respond(HttpStatusCode.OK)
+            }
+
         }
     }
 }

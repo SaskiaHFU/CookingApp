@@ -31,49 +31,38 @@ import com.saskiahfu.hfu.cookingapp.feature.weekplan.ui.MealplanViewModel
 @Composable
 fun MainNavigationGraph(navController: NavHostController) {
     NavHost(navController, startDestination = BottomNavigationItem.Home.routeName) {
-
         composable(BottomNavigationItem.Login.routeName) {
             val vm = hiltViewModel<LoginViewModel>()
             LoginScreen(vm)
         }
-
         composable(BottomNavigationItem.Signup.routeName) {
             val vm = hiltViewModel<SignUpViewModel>()
             SignUpScreen(vm)
         }
-
         composable(BottomNavigationItem.RecipeSingle.routeName) {
             val vm = hiltViewModel<SingleRecipeViewModel>()
             val vmM = hiltViewModel<MealplanViewModel>()
             SingleRecipeScreen(vm, vmM, navController)
         }
-
         composable(BottomNavigationItem.Profile.routeName) {
             val vm = hiltViewModel<ProfileViewModel>()
             ProfileScreen(vm)
         }
-
         composable(BottomNavigationItem.AddRecipe.routeName) {
             val vm = hiltViewModel<AddRecipeViewModel>()
             val vmM = hiltViewModel<MealplanViewModel>()
             AddRecipeScreen(vm, vmM, navController)
         }
-
 //        Bottom
         composable(BottomNavigationItem.Recipes.routeName) {
             val vmR = hiltViewModel<RecipesViewModel>()
             val vmRC = hiltViewModel<RecipeCategoriesViewModel>()
-//            val vmS = hiltViewModel<SingleRecipesViewModel>()
             RecipesScreen(vmR, vmRC, navController)
         }
-
         composable(BottomNavigationItem.Cart.routeName) {
             val vm = hiltViewModel<CartViewModel>()
             CartScreen(vm)
-//            val vm = hiltViewModel<ShoppingCartViewModel>()
-//            ShoppingCartScreen(vm)
         }
-
         composable(BottomNavigationItem.Home.routeName) {
             val vm = hiltViewModel<HomeViewModel>()
             HomeScreen(vm)
@@ -86,7 +75,7 @@ fun MainNavigationGraph(navController: NavHostController) {
             val vm = hiltViewModel<MealplanViewModel>()
             MealplanScreen(vm)
         }
-
     }
 }
+
 

@@ -1,9 +1,7 @@
 package com.saskiahfu.hfu.cookingapp.feature.recipes.ui.single
 
-
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -12,8 +10,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -22,13 +18,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import coil.compose.rememberAsyncImagePainter
 import com.saskiahfu.hfu.cookingapp.R
 import com.saskiahfu.hfu.cookingapp.feature.main.contentPadding
 import com.saskiahfu.hfu.cookingapp.feature.main.modifier
@@ -56,7 +50,7 @@ private fun SingleRecipeScreenUI(
     meals: List<MealplanUI>,
     navController: NavController
 ) {
-
+    val context = LocalContext.current
 
     var name by remember { mutableStateOf("") }
     var category by remember { mutableStateOf("") }
@@ -71,11 +65,9 @@ private fun SingleRecipeScreenUI(
     var bfName by remember { mutableStateOf("") }
     var luName by remember { mutableStateOf("") }
     var diName by remember { mutableStateOf("") }
-
     var bfSelected by remember { mutableStateOf(false) }
     var luSelected by remember { mutableStateOf(false) }
     var diSelected by remember { mutableStateOf(false) }
-
 
     var linkClicked by remember { mutableStateOf(false) }
     var expandColumn by remember { mutableStateOf(false) }
@@ -97,7 +89,6 @@ private fun SingleRecipeScreenUI(
 
 
     if (linkClicked) {
-        val context = LocalContext.current
         val intent = remember { Intent(Intent.ACTION_VIEW, Uri.parse(sourceUri)) }
         context.startActivity(intent)
     }
@@ -132,11 +123,6 @@ private fun SingleRecipeScreenUI(
         )
     }
 
-//Go Back Icon
-    val menuIconPadding = PaddingValues(
-        start = 15.dp,
-        top = 20.dp,
-    )
 
 
 //Content
@@ -147,9 +133,17 @@ private fun SingleRecipeScreenUI(
     ) {
         Column(
             modifier
-                .padding(recipeImgPadding).fillMaxWidth(),
+                .padding(recipeImgPadding)
+                .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+//            val imgSource = File(context.getExternalFilesDir(
+//                Environment.DIRECTORY_PICTURES), name)
+//            if (!imgSource?.mkdirs()) {
+//                Log.e(LOG_TAG, "Directory not created")
+//            }
+
             AsyncImage(
                 model = img,
                 contentDescription = name,
@@ -157,7 +151,6 @@ private fun SingleRecipeScreenUI(
                     .size(200.dp)
                     .padding(end = 8.dp),
             )
-
         }
 
 
@@ -167,16 +160,15 @@ private fun SingleRecipeScreenUI(
         ) {
             Column {
 //Add Titel
-                Row() {
+                Row {
                     Text(
                         text = name,
                         style = MaterialTheme.typography.body1,
                     )
                 }
                 Spacer(modifier.height(40.dp))
-
 //Category
-                Column() {
+                Column {
                     Text(
                         text = category,
                         style = MaterialTheme.typography.h5,
@@ -222,9 +214,9 @@ private fun SingleRecipeScreenUI(
                 ) {
 
                     items(meals) { meal ->
-                        Column() {
+                        Column {
 
-                            Row() {
+                            Row {
                                 TextButton(
                                     onClick = {
                                         expandColumn = true
@@ -248,7 +240,7 @@ private fun SingleRecipeScreenUI(
                             }
 
                             if (expandColumn) {
-                                Column() {
+                                Column {
                                     TextButton(
                                         onClick = {
                                             bfSelected = true

@@ -1,10 +1,8 @@
 package hfu.cookingapp.com.model
 
+import hfu.cookingapp.com.model.DatabaseFactory.dbQuery
 import kotlinx.serialization.Serializable
-import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.*
 
 @Serializable
 data class CartItem(
@@ -25,7 +23,8 @@ interface CartDao {
         item: String,
     ): CartItem?
 
-    suspend fun deleteAllByCartId(id: String): Int
+    suspend fun deleteAll(): Unit
+    suspend fun deleteAllByCartId(id: String): Unit
 }
 
 class CartDaoImpl : CartDao {
@@ -43,8 +42,14 @@ class CartDaoImpl : CartDao {
             insertStatement.resultedValues?.singleOrNull()?.let(::resultRowToCart)
         }
 
-    override suspend fun deleteAllByCartId(id: String): Int {
-        TODO("Not yet implemented")
+    override suspend fun deleteAll(): Unit {
+        Cart.deleteAll()
+    }
+
+    override suspend fun deleteAllByCartId(id: String): Unit = dbQuery {
+        Cart.deleteWhere {
+            Cart.id.eq(id)
+        }
     }
 
     private fun resultRowToCart(row: ResultRow) = CartItem(

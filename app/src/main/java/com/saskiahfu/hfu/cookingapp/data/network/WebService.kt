@@ -23,26 +23,18 @@ interface WebService {
     @GET("v1/product")
     suspend fun getProducts(): List<ProductDto>
 
-    @PUT("v1/cart/{id}")
-    suspend fun addItem(@Path("id") id: String, @Body body: AddItemRequestDto)
-
-
     //Cart
-
     @GET("v1/cart")
     suspend fun getCart(): List<CartItemDto>
 
     @DELETE("v1/cart")
-    suspend fun clearCart(@Path("id") id: String)
+    suspend fun clearCart(): List<CartItemDto>
+
+    @DELETE("v1/cart/{id}")
+    suspend fun clearCartItem(@Path("id") id: String, @Body body: DeleteCartItemRequestDto)
 
     @POST("v1/cart")
     suspend fun addCartItem(@Body request: AddCartItemRequestDto)
-
-//    @GET("v1/cart/{id}")
-//    suspend fun getCartById(@Path("id") id: String): List<ShoppingCartItemDto>
-//
-//    @DELETE("v1/cart/{id}")
-//    suspend fun clearCart(@Path("id") id: String)
 
     //    Recipes
     @GET("v1/recipes")
@@ -63,7 +55,6 @@ interface WebService {
 
     @PUT("v1/mealplan/{day}")
     suspend fun updateMeal(@Path("day") day: String, @Body body: AddMealToPlanRequestDto)
-
 
     companion object {
         const val BASE_URL = "http://10.0.2.2:8080/"
@@ -88,12 +79,10 @@ data class AddCartItemRequestDto(
     val item: String,
 )
 
-//@Serializable
-//data class ShoppingCartItemDto(
-//    val id: String,
-//    val productId: String,
-//    val cartId: String,
-//)
+@Serializable
+data class DeleteCartItemRequestDto(
+    val item: String,
+)
 
 //Product
 @Serializable

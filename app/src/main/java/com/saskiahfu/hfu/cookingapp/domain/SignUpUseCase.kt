@@ -31,20 +31,15 @@ class SignUpUseCase @Inject constructor(
                 )
             }
 
-            val response = webService.signUp(
+            webService.signUp(
                 SignUpRequestDto(username, password)
             )
-            userSettingsRepository.updateSettings {
-                it.copy(
-//                    cartId = ShoppingCartId(response.cartId),
-                )
-            }
 
             downloadProductsUseCase()
             downloadRecipesUseCase()
             downloadMealsUseCase()
             downloadRecipeCategoriesUseCase()
-
+            downloadCartUseCase()
 
             userSettingsRepository.updateSettings {
                 it.copy(

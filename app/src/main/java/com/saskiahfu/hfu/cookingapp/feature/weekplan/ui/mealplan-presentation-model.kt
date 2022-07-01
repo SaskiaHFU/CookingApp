@@ -22,7 +22,7 @@ class MealplanUI(
 )
 
 @Composable
-fun addMealButtonIcon(category: String) { //TODO code category/day Class or however it goes in
+fun addMealButtonIcon(category: String) {
     IconButton(
         onClick = { /*TODO Code Add Meal Button*/ },
         modifier.size(25.dp)

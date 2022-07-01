@@ -32,12 +32,6 @@ fun Route.recipeCatRouting() {
                 } ?: call.respond(HttpStatusCode.InternalServerError)
             }
         }
-
-//        delete {
-//            ifAuthorized { name ->
-//                shoppingCartItemDao.deleteAllByCartId(cartId)
-//                call.respond(HttpStatusCode.OK)
-//            }
     }
 }
 

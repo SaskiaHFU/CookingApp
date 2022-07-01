@@ -28,10 +28,6 @@ class UpdateMealUseCase @Inject constructor(
                 diName = diName
             )
 
-//    new slot übergeben an update
-//           dataclass -> copy
-//           class -> kein copy (aufwändiger)
-
             if (newSlot != null) {
                 mealplanRepository.updateMeal(newSlot)
                 webService.updateMeal(

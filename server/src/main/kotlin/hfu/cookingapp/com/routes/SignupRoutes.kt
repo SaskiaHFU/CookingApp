@@ -35,7 +35,6 @@ fun Route.signupRouting() {
                         UUID.randomUUID().toString(),
                         userData.userName,
                         userData.password,
-//                        UUID.randomUUID().toString(),
                     )?.let { newUser ->
                         call.respond(SignupResponse(newUser.name))
                     } ?: call.respond(HttpStatusCode.InternalServerError)

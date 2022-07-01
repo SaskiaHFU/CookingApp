@@ -1,15 +1,17 @@
 package com.saskiahfu.hfu.cookingapp.feature.recipes.ui.add
 
-import android.app.Activity
+import android.content.ContentValues
 import android.content.Context
-import android.content.Intent
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.provider.MediaStore
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -30,7 +32,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.saskiahfu.hfu.cookingapp.R
@@ -40,40 +41,30 @@ import com.saskiahfu.hfu.cookingapp.feature.recipes.ui.categories.AddRecipeCateg
 import com.saskiahfu.hfu.cookingapp.feature.recipes.ui.categories.RecipeCategoryUI
 import com.saskiahfu.hfu.cookingapp.feature.weekplan.ui.MealplanUI
 import com.saskiahfu.hfu.cookingapp.feature.weekplan.ui.MealplanViewModel
-import org.apache.commons.io.FileUtils
-import java.io.File
+import java.net.URL
 
-
-private fun createFileFromUri(name: String, uri: Uri, context: Context): File? {
-    return try {
-        val stream = context.contentResolver.openInputStream(uri)
-        val file =
-            File.createTempFile(
-                "${name}_${System.currentTimeMillis()}",
-                ".png",
-                context.cacheDir
-            )
-        FileUtils.copyInputStreamToFile(
-            stream,
-            file
-        )  // Use this one import org.apache.commons.io.FileUtils
-        file
-    } catch (e: Exception) {
-        e.printStackTrace()
-        null
+private fun getRealPathFromURI(context: Context, contentURI: Uri): String {
+    val result: String
+    val cursor = context.contentResolver.query(contentURI, null, null, null, null)
+    if (cursor == null) { // Source is Dropbox or other similar local file path
+        result = contentURI.path.toString()
+    } else {
+        cursor.moveToFirst()
+        val idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+        result = cursor.getString(idx)
+        cursor.close()
     }
+    return result
 }
 
-
-
-
 //-------------------------------------------------------------------------------
+
 @Composable
 fun AddRecipeScreen(
     viewModel: AddRecipeViewModel = viewModel(),
     viewModelMeal: MealplanViewModel = viewModel(),
     navController: NavController
-) { //TODO weiter nav gehen
+) {
     val recipeCategories by viewModel.bindUi(LocalContext.current).observeAsState(emptyList())
     val meals by viewModelMeal.bindUi(LocalContext.current).observeAsState(emptyList())
     AddRecipeScreenUI(
@@ -85,6 +76,7 @@ fun AddRecipeScreen(
     )
 }
 
+
 @Composable
 private fun AddRecipeScreenUI(
     onAddRecipe: (name: String, img: String, ingredients: String, steps: String, category: String, sourceName: String, sourceUri: String) -> Unit,
@@ -93,6 +85,8 @@ private fun AddRecipeScreenUI(
     meals: List<MealplanUI>,
     navController: NavController
 ) {
+    val scrollState = rememberLazyListState()
+
     var name by remember { mutableStateOf("") }
     var category by remember { mutableStateOf("") }
     var img by remember { mutableStateOf("") }
@@ -101,10 +95,8 @@ private fun AddRecipeScreenUI(
     var sourceName by remember { mutableStateOf("") }
     var sourceUri by remember { mutableStateOf("") }
 
-
     var showPopup by remember { mutableStateOf(false) }
     var expandColumn by remember { mutableStateOf(false) }
-
     val catSelected = remember { mutableStateOf(false) }
 
 
@@ -113,32 +105,22 @@ private fun AddRecipeScreenUI(
     var bfName by remember { mutableStateOf("") }
     var luName by remember { mutableStateOf("") }
     var diName by remember { mutableStateOf("") }
-
     var bfSelected by remember { mutableStateOf(false) }
     var luSelected by remember { mutableStateOf(false) }
     var diSelected by remember { mutableStateOf(false) }
 
 //    Image Folder
-//    var imageUri by remember { mutableStateOf<Uri?>(null) }
-//    val context = LocalContext.current
-//    val bitmap = remember { mutableStateOf<Bitmap?>(null) }
-//
-//    val launcher = rememberLauncherForActivityResult(
-//        contract = ActivityResultContracts.GetContent()
-//    ) { uri: Uri? ->
-//
-//        imageUri = uri
-//        imageUri?.let { createFileFromUri(name, it, context) }
-//
-//        println("url: " + imageUri)
-//        // innerhalb von app irgendwo hinkopieren (zwspeichern
-//    }
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
+    val context = LocalContext.current
+    val bitmap = remember { mutableStateOf<Bitmap?>(null) }
 
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        imageUri = uri
+    }
 
     var showAddImgButton by remember { mutableStateOf(true) }
-
-    val scrollState = rememberLazyListState()
-
 
     Column(
         modifier
@@ -188,10 +170,9 @@ private fun AddRecipeScreenUI(
             if (showAddImgButton) {
                 Button(
                     onClick = {
-                        //TODO code upload Img
-//                        launcher.launch("image/*")
+                        launcher.launch("image/*")
 //                        img = imageUri.toString()
-
+                        img = imageUri?.let { getRealPathFromURI(context, it) }.toString()
 
 
                     },
@@ -213,28 +194,26 @@ private fun AddRecipeScreenUI(
                     )
                 }
             }
-//
-//            imageUri?.let {
-//                if (Build.VERSION.SDK_INT < 28) {
-//                    bitmap.value = MediaStore.Images
-//                        .Media.getBitmap(context.contentResolver, it)
-//
-//                } else {
-//                    val source = ImageDecoder
-//                        .createSource(context.contentResolver, it)
-//                    bitmap.value = ImageDecoder.decodeBitmap(source)
-//                }
-//
-//                bitmap.value?.let { btm ->
-//                    Image(
-//                        bitmap = btm.asImageBitmap(),
-//                        contentDescription = null,
-//                        modifier = Modifier.size(400.dp)
-//                    )
-//                }
-//                showAddImgButton = false
-//                img = imageUri.toString()
-//            }
+
+            imageUri?.let {
+                if (Build.VERSION.SDK_INT < 28) {
+                    bitmap.value = MediaStore.Images
+                        .Media.getBitmap(context.contentResolver, it)
+                } else {
+                    val source = ImageDecoder
+                        .createSource(context.contentResolver, it)
+                    bitmap.value = ImageDecoder.decodeBitmap(source)
+                }
+                bitmap.value?.let { btm ->
+                    Image(
+                        bitmap = btm.asImageBitmap(),
+                        contentDescription = null,
+                        modifier = Modifier.size(400.dp)
+                    )
+                }
+                showAddImgButton = false
+                img = imageUri.toString()
+            }
         }
 
 
@@ -246,7 +225,7 @@ private fun AddRecipeScreenUI(
         ) {
             Column {
 //Add Titel
-                Column() {
+                Column {
                     Text(
                         text = stringResource(R.string.recipe_add_title),
                         style = MaterialTheme.typography.body1,
@@ -263,7 +242,7 @@ private fun AddRecipeScreenUI(
                 }
                 Spacer(modifier.height(40.dp))
 //Category
-                Column() {
+                Column {
                     Text(
                         text = stringResource(R.string.recipe_add_category),
                         style = MaterialTheme.typography.h5,
@@ -294,7 +273,7 @@ private fun AddRecipeScreenUI(
                 }
                 Spacer(modifier.height(45.dp))
 // Zutaten
-                Column() {
+                Column {
                     Text(
                         text = stringResource(R.string.recipe_add_ingredients),
                         style = MaterialTheme.typography.h5,
@@ -320,7 +299,7 @@ private fun AddRecipeScreenUI(
                 }
                 Spacer(modifier.height(45.dp))
 // Steps
-                Column() {
+                Column {
                     Text(
                         text = stringResource(R.string.recipe_add_steps),
                         style = MaterialTheme.typography.h5,
@@ -358,9 +337,8 @@ private fun AddRecipeScreenUI(
                 ) {
 
                     items(meals) { meal ->
-                        Column() {
-
-                            Row() {
+                        Column {
+                            Row {
                                 TextButton(
                                     onClick = {
                                         expandColumn = true
@@ -384,7 +362,7 @@ private fun AddRecipeScreenUI(
                             }
 
                             if (expandColumn) {
-                                Column() {
+                                Column {
                                     TextButton(
                                         onClick = {
                                             bfSelected = true
@@ -450,8 +428,6 @@ private fun AddRecipeScreenUI(
                             }
                         }
                     }
-
-
                 }
 
 //Source
@@ -463,11 +439,7 @@ private fun AddRecipeScreenUI(
                 Column(
                     verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
-                    Row() {
-//                        Text(
-//                            text = "Title",
-//                            style = MaterialTheme.typography.body1,
-//                        )
+                    Row {
                         TextField(
                             value = sourceName,
                             onValueChange = { sourceName = it },
@@ -478,11 +450,7 @@ private fun AddRecipeScreenUI(
                             )
                         )
                     }
-                    Row() {
-//                        Text(
-//                            text = "Link",
-//                            style = MaterialTheme.typography.body1,
-//                        )
+                    Row {
                         TextField(
                             value = sourceUri,
                             onValueChange = { sourceUri = it },
@@ -505,6 +473,24 @@ private fun AddRecipeScreenUI(
         ) {
             Button(
                 onClick = {
+
+                    val contentValues = ContentValues().apply {
+                        put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+                        put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+                        put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
+                    }
+
+//                    val resolver = context.contentResolver
+//                    val uri =
+//                        resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues)
+//                    if (uri != null) {
+//                        URL(img).openStream().use { input ->
+//                            resolver.openOutputStream(uri).use { output ->
+//                                input.copyTo(output!!, DEFAULT_BUFFER_SIZE)
+//                            }
+//                        }
+//                    }
+
                     onAddRecipe(name, img, ingredients, steps, category, sourceName, sourceUri)
                     onUpdateMealplan(day, bfName, luName, diName)
                     showPopup = true

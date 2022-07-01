@@ -17,7 +17,7 @@ class DeleteCartItemsUseCase @Inject constructor(
     suspend operator fun invoke() = withContext(Dispatchers.Default) {
         kotlin.runCatching {
             cartRepository.deleteAll()
-
+            webService.clearCart()
         }.fold(
             { Log.e("CART DELETE", "ok") },
             { Log.e("CART DELETE", it.toString(), it) },

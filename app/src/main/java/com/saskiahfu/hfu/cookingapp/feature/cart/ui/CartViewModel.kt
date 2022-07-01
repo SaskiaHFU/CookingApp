@@ -47,7 +47,6 @@ class CartViewModel @Inject constructor(
         viewModelScope.launch {
             val cart = cartRepository
             cart.deleteAll()
-
         }
     }
 

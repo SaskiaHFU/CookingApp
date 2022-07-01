@@ -30,7 +30,6 @@ interface UserDao {
         id: String,
         name: String,
         password: String,
-//        cartId: String,
     ): User?
 }
 
@@ -51,7 +50,6 @@ class UserDaoImpl : UserDao {
             it[Users.id] = id
             it[Users.name] = name
             it[Users.password] = password
-//            it[Users.cartId] = cartId
         }
         insertStatement.resultedValues?.singleOrNull()?.let(::resultRowToUser)
     }
@@ -60,7 +58,6 @@ class UserDaoImpl : UserDao {
         id = row[Users.id],
         name = row[Users.name],
         password = row[Users.password],
-//        cartId = row[Users.cartId],
     )
 }
 
