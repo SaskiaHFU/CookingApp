@@ -32,21 +32,15 @@ fun MealplanScreen(viewModel: MealplanViewModel = viewModel()) {
 @Composable
 private fun MealplanScreenUI(
     meals: List<MealplanUI>,
-    onDeleteMealplan: (day: String, bfName: String, luName: String, diName: String) -> Unit
+    onUpdateMealplan: (day: String, bfName: String, luName: String, diName: String) -> Unit
 ) {
     var day by remember { mutableStateOf("") }
     var bfName by remember { mutableStateOf("") }
     var luName by remember { mutableStateOf("") }
     var diName by remember { mutableStateOf("") }
 
-    Column(
-    ) {
-
-        //Call Header
-//        menuIcon()
-//        pageDirection("My Week")
-
-        //Content
+    Column() {
+//Content
         Box(
             modifier
                 .padding(contentPadding)
@@ -62,6 +56,7 @@ private fun MealplanScreenUI(
         }
     }
 
+
     // Button Clear
     Column(
         modifier
@@ -76,11 +71,17 @@ private fun MealplanScreenUI(
         ) {
             Button(
                 onClick = {
-                    bfName = " "
-                    luName = " "
-                    diName = " "
-                    println("meals: " + bfName + luName + diName)
-                    onDeleteMealplan(day, bfName, luName, diName)
+//                    meals.forEach { meal ->
+//                        meal.bfName = ""
+//                        bfName = meal.bfName
+//                        meal.luName = ""
+//                        luName = meal.luName
+//                        meal.diName = ""
+//                        diName = meal.diName
+//                    }
+//
+//                    println("meals: " )
+//                    onUpdateMealplan(day, bfName, luName, diName)
                 },
                 modifier
                     .clip(

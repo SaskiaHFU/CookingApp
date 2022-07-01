@@ -9,6 +9,8 @@ import androidx.compose.ui.unit.dp
 
 val modifier = Modifier
 
+val REQUEST_CODE = 100
+
 val contentPadding = PaddingValues(
     start = 30.dp,
     top = 45.dp,

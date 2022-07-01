@@ -138,22 +138,6 @@ private fun SingleRecipeScreenUI(
         top = 20.dp,
     )
 
-//    Column() {
-//        IconButton(
-//            onClick = {
-//                println("click")
-//                navController.navigate("recipes")
-//            },
-//            modifier.padding(menuIconPadding),
-//        ) {
-//            Icon(
-//                Icons.Filled.ArrowBack,
-//                contentDescription = "Go Back",
-//                modifier.size(40.dp)
-//            )
-//        }
-//    }
-
 
 //Content
     Column(

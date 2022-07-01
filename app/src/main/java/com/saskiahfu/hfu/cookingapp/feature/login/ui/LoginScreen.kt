@@ -25,12 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import com.saskiahfu.hfu.cookingapp.R
 import com.saskiahfu.hfu.cookingapp.feature.main.contentPadding
 import com.saskiahfu.hfu.cookingapp.feature.main.modifier
-import com.saskiahfu.hfu.cookingapp.feature.main.navigation.StartNavigationGraph
-
-
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,15 +37,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.material.TopAppBar
-import androidx.compose.material.contentColorFor
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.runtime.MutableState
-import androidx.compose.ui.graphics.Color
 import com.saskiahfu.hfu.cookingapp.feature.main.containerPadding
 import com.saskiahfu.hfu.cookingapp.feature.main.signInPadding
 

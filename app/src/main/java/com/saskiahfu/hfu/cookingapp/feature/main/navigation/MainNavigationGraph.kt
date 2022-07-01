@@ -27,22 +27,6 @@ import com.saskiahfu.hfu.cookingapp.feature.recipes.ui.single.SingleRecipeViewMo
 import com.saskiahfu.hfu.cookingapp.feature.weekplan.ui.MealplanScreen
 import com.saskiahfu.hfu.cookingapp.feature.weekplan.ui.MealplanViewModel
 
-@Composable
-fun StartNavigationGraph(navController: NavHostController) {
-    NavHost(navController, startDestination = BottomNavigationItem.Login.routeName)
-    {
-
-        composable(BottomNavigationItem.Login.routeName) {
-            val vm = hiltViewModel<LoginViewModel>()
-            LoginScreen(vm)
-        }
-
-        composable(BottomNavigationItem.Signup.routeName) {
-            val vm = hiltViewModel<SignUpViewModel>()
-            SignUpScreen(vm)
-        }
-    }
-}
 
 @Composable
 fun MainNavigationGraph(navController: NavHostController) {
@@ -53,16 +37,16 @@ fun MainNavigationGraph(navController: NavHostController) {
             LoginScreen(vm)
         }
 
-//        composable(BottomNavigationItem.Signup.routeName) {
-//            val vm = hiltViewModel<SignUpViewModel>()
-//            SignUpScreen(vm)
-//        }
-//
-//        composable(BottomNavigationItem.RecipeSingle.routeName) {
-//            val vm = hiltViewModel<SingleRecipeViewModel>()
-//            val vmM = hiltViewModel<MealplanViewModel>()
-//            SingleRecipeScreen(vm, vmM, navController)
-//        }
+        composable(BottomNavigationItem.Signup.routeName) {
+            val vm = hiltViewModel<SignUpViewModel>()
+            SignUpScreen(vm)
+        }
+
+        composable(BottomNavigationItem.RecipeSingle.routeName) {
+            val vm = hiltViewModel<SingleRecipeViewModel>()
+            val vmM = hiltViewModel<MealplanViewModel>()
+            SingleRecipeScreen(vm, vmM, navController)
+        }
 
         composable(BottomNavigationItem.Profile.routeName) {
             val vm = hiltViewModel<ProfileViewModel>()

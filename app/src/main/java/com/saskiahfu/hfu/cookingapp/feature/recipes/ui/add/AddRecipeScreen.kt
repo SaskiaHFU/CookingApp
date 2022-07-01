@@ -1,6 +1,8 @@
 package com.saskiahfu.hfu.cookingapp.feature.recipes.ui.add
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
@@ -28,6 +30,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.saskiahfu.hfu.cookingapp.R
@@ -61,6 +64,10 @@ private fun createFileFromUri(name: String, uri: Uri, context: Context): File? {
     }
 }
 
+
+
+
+//-------------------------------------------------------------------------------
 @Composable
 fun AddRecipeScreen(
     viewModel: AddRecipeViewModel = viewModel(),
@@ -112,20 +119,21 @@ private fun AddRecipeScreenUI(
     var diSelected by remember { mutableStateOf(false) }
 
 //    Image Folder
-    var imageUri by remember { mutableStateOf<Uri?>(null) }
-    val context = LocalContext.current
-    val bitmap = remember { mutableStateOf<Bitmap?>(null) }
+//    var imageUri by remember { mutableStateOf<Uri?>(null) }
+//    val context = LocalContext.current
+//    val bitmap = remember { mutableStateOf<Bitmap?>(null) }
+//
+//    val launcher = rememberLauncherForActivityResult(
+//        contract = ActivityResultContracts.GetContent()
+//    ) { uri: Uri? ->
+//
+//        imageUri = uri
+//        imageUri?.let { createFileFromUri(name, it, context) }
+//
+//        println("url: " + imageUri)
+//        // innerhalb von app irgendwo hinkopieren (zwspeichern
+//    }
 
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-
-        imageUri = uri
-        imageUri?.let { createFileFromUri(name, it, context) }
-
-        println("url: " + imageUri)
-        // innerhalb von app irgendwo hinkopieren (zwspeichern
-    }
 
     var showAddImgButton by remember { mutableStateOf(true) }
 
@@ -169,6 +177,8 @@ private fun AddRecipeScreenUI(
             )
 
         }
+
+
 //Image
         Row(
             modifier
@@ -179,8 +189,10 @@ private fun AddRecipeScreenUI(
                 Button(
                     onClick = {
                         //TODO code upload Img
-                        launcher.launch("image/*")
-                        img = imageUri.toString()
+//                        launcher.launch("image/*")
+//                        img = imageUri.toString()
+
+
 
                     },
                     modifier
@@ -201,28 +213,28 @@ private fun AddRecipeScreenUI(
                     )
                 }
             }
-
-            imageUri?.let {
-                if (Build.VERSION.SDK_INT < 28) {
-                    bitmap.value = MediaStore.Images
-                        .Media.getBitmap(context.contentResolver, it)
-
-                } else {
-                    val source = ImageDecoder
-                        .createSource(context.contentResolver, it)
-                    bitmap.value = ImageDecoder.decodeBitmap(source)
-                }
-
-                bitmap.value?.let { btm ->
-                    Image(
-                        bitmap = btm.asImageBitmap(),
-                        contentDescription = null,
-                        modifier = Modifier.size(400.dp)
-                    )
-                }
-                showAddImgButton = false
-                img = imageUri.toString()
-            }
+//
+//            imageUri?.let {
+//                if (Build.VERSION.SDK_INT < 28) {
+//                    bitmap.value = MediaStore.Images
+//                        .Media.getBitmap(context.contentResolver, it)
+//
+//                } else {
+//                    val source = ImageDecoder
+//                        .createSource(context.contentResolver, it)
+//                    bitmap.value = ImageDecoder.decodeBitmap(source)
+//                }
+//
+//                bitmap.value?.let { btm ->
+//                    Image(
+//                        bitmap = btm.asImageBitmap(),
+//                        contentDescription = null,
+//                        modifier = Modifier.size(400.dp)
+//                    )
+//                }
+//                showAddImgButton = false
+//                img = imageUri.toString()
+//            }
         }
 
 
