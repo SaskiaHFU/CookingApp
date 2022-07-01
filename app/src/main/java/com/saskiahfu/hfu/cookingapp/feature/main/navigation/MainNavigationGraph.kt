@@ -9,14 +9,8 @@ import com.saskiahfu.hfu.cookingapp.feature.cart.ui.CartScreen
 import com.saskiahfu.hfu.cookingapp.feature.cart.ui.CartViewModel
 import com.saskiahfu.hfu.cookingapp.feature.profile.ui.ProfileScreen
 import com.saskiahfu.hfu.cookingapp.feature.profile.ui.ProfileViewModel
-import com.saskiahfu.hfu.cookingapp.feature.home.ui.HomeScreen
-import com.saskiahfu.hfu.cookingapp.feature.home.ui.HomeViewModel
-import com.saskiahfu.hfu.cookingapp.feature.links.ui.LinksScreen
-import com.saskiahfu.hfu.cookingapp.feature.links.ui.LinksViewModel
 import com.saskiahfu.hfu.cookingapp.feature.login.ui.LoginScreen
 import com.saskiahfu.hfu.cookingapp.feature.login.ui.LoginViewModel
-import com.saskiahfu.hfu.cookingapp.feature.login.ui.SignUpScreen
-import com.saskiahfu.hfu.cookingapp.feature.login.ui.SignUpViewModel
 import com.saskiahfu.hfu.cookingapp.feature.recipes.ui.categories.RecipeCategoriesViewModel
 import com.saskiahfu.hfu.cookingapp.feature.recipes.ui.RecipesScreen
 import com.saskiahfu.hfu.cookingapp.feature.recipes.ui.RecipesViewModel
@@ -30,14 +24,10 @@ import com.saskiahfu.hfu.cookingapp.feature.weekplan.ui.MealplanViewModel
 
 @Composable
 fun MainNavigationGraph(navController: NavHostController) {
-    NavHost(navController, startDestination = BottomNavigationItem.Home.routeName) {
+    NavHost(navController, startDestination = BottomNavigationItem.Week.routeName) {
         composable(BottomNavigationItem.Login.routeName) {
             val vm = hiltViewModel<LoginViewModel>()
             LoginScreen(vm)
-        }
-        composable(BottomNavigationItem.Signup.routeName) {
-            val vm = hiltViewModel<SignUpViewModel>()
-            SignUpScreen(vm)
         }
         composable(BottomNavigationItem.RecipeSingle.routeName) {
             val vm = hiltViewModel<SingleRecipeViewModel>()
@@ -63,14 +53,10 @@ fun MainNavigationGraph(navController: NavHostController) {
             val vm = hiltViewModel<CartViewModel>()
             CartScreen(vm)
         }
-        composable(BottomNavigationItem.Home.routeName) {
-            val vm = hiltViewModel<HomeViewModel>()
-            HomeScreen(vm)
-        }
-        composable(BottomNavigationItem.Links.routeName) {
-            val vm = hiltViewModel<LinksViewModel>()
-            LinksScreen(vm)
-        }
+//        composable(BottomNavigationItem.Home.routeName) {
+//            val vm = hiltViewModel<RecipeCategoriesViewModel>()
+//            HomeScreen(vm, navController)
+//        }
         composable(BottomNavigationItem.Week.routeName) {
             val vm = hiltViewModel<MealplanViewModel>()
             MealplanScreen(vm)

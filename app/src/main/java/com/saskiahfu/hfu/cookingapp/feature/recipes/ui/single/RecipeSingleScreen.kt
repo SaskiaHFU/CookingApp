@@ -163,22 +163,29 @@ private fun SingleRecipeScreenUI(
                 Row {
                     Text(
                         text = name,
-                        style = MaterialTheme.typography.body1,
+                        style = MaterialTheme.typography.h2,
                     )
                 }
                 Spacer(modifier.height(40.dp))
 //Category
-                Column {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.recipe_category),
+                        style = MaterialTheme.typography.body1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
                     Text(
                         text = category,
-                        style = MaterialTheme.typography.h5,
+                        style = MaterialTheme.typography.body1,
                         overflow = TextOverflow.Ellipsis,
                     )
                 }
                 Spacer(modifier.height(45.dp))
 // Zutaten
                 Text(
-                    text = "Ingredients",
+                    text = stringResource(R.string.recipe_ingredients),
                     style = MaterialTheme.typography.h5,
                 )
                 Spacer(modifier.height(10.dp))
@@ -190,7 +197,7 @@ private fun SingleRecipeScreenUI(
 
 // Steps
                 Text(
-                    text = "Steps",
+                    text = stringResource(R.string.recipe_steps),
                     style = MaterialTheme.typography.h5,
                 )
                 Spacer(modifier.height(10.dp))
@@ -260,7 +267,7 @@ private fun SingleRecipeScreenUI(
                                         ),
                                     ) {
                                         Text(
-                                            text = "Breakfast",
+                                            text = stringResource(R.string.mealplan_bf_),
                                             style = MaterialTheme.typography.body1
                                         )
                                     }
@@ -279,7 +286,7 @@ private fun SingleRecipeScreenUI(
                                         ),
                                     ) {
                                         Text(
-                                            text = "Lunch",
+                                            text = stringResource(R.string.mealplan_lu_),
                                             style = MaterialTheme.typography.body1
                                         )
                                     }
@@ -298,7 +305,7 @@ private fun SingleRecipeScreenUI(
                                         ),
                                     ) {
                                         Text(
-                                            text = "Dinner",
+                                            text = stringResource(R.string.mealplan_di_),
                                             style = MaterialTheme.typography.body1
                                         )
                                     }
@@ -309,7 +316,7 @@ private fun SingleRecipeScreenUI(
                 }
 //Source
                 Text(
-                    text = "Source",
+                    text = stringResource(R.string.recipe_source),
                     style = MaterialTheme.typography.h5,
                 )
                 Spacer(modifier.height(10.dp))
@@ -330,7 +337,7 @@ private fun SingleRecipeScreenUI(
                         ) {
                         Icon(
                             painter = painterResource(R.drawable.ic_outline_link_24),
-                            contentDescription = "Follow Link",
+                            contentDescription = stringResource(R.string.recipe_follow_link),
                         )
                     }
                 }

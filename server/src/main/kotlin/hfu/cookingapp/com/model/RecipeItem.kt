@@ -70,18 +70,13 @@ class RecipeDaoImpl : RecipeDao {
     ): RecipeItem? =
         dbQuery {
 
-//            val jsonIngr = Json.encodeToString(ListSerializer(String.serializer()), ingredients);
-//            val jsonSteps = Json.encodeToString(ListSerializer(String.serializer()), steps);
-
             val insertStatement = RecipeItems.insert {
 
                 it[RecipeItems.id] = id
                 it[RecipeItems.name] = name
                 it[RecipeItems.img] = img
                 it[RecipeItems.ingredients] = ingredients
-//                    jsonIngr
                 it[RecipeItems.steps] = steps
-//                    jsonSteps
                 it[RecipeItems.category] = category
                 it[RecipeItems.sourceName] = sourceName
                 it[RecipeItems.sourceUri] = sourceUri
@@ -91,15 +86,12 @@ class RecipeDaoImpl : RecipeDao {
         }
 
 //Aus db raus
-
     private fun resultRowToRecipeItem(row: ResultRow) = RecipeItem(
         id = row[RecipeItems.id],
         name = row[RecipeItems.name],
         img = row[RecipeItems.img],
         ingredients = row[RecipeItems.ingredients],
         steps = row[RecipeItems.steps],
-//        ingredients = Json.decodeFromString(ListSerializer(String.serializer()), jsonIngr), //decode,
-//        steps = Json.decodeFromString(ListSerializer(String.serializer()), jsonIngr),
         category = row[RecipeItems.category],
         sourceName = row[RecipeItems.sourceName],
         sourceUri = row[RecipeItems.sourceUri],

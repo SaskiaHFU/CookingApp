@@ -16,7 +16,7 @@ fun Application.configureRouting() {
 
         authenticate("auth-basic") {
             loginRouting()
-            productRouting()
+//            productRouting()
         }
     }
 }

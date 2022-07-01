@@ -22,8 +22,7 @@ fun MainBottomNavigation(navController: NavController) {
         listOf(
             BottomNavigationItem.Recipes,
             BottomNavigationItem.Cart,
-            BottomNavigationItem.Home,
-            BottomNavigationItem.Links,
+//            BottomNavigationItem.Home,
             BottomNavigationItem.Week,
 
             ).forEach { navItem ->

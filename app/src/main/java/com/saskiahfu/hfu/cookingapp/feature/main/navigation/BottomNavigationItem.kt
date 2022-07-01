@@ -43,11 +43,6 @@ sealed class BottomNavigationItem  {
         override val icon = R.drawable.ic_baseline_person_24
         override val routeName = "profile"
     }
-    object Links : BottomNavigationItem() {
-        override val title = R.string.linklist_title_navigation
-        override val icon = R.drawable.ic_outline_link_24
-        override val routeName = "linklist"
-    }
     object Home : BottomNavigationItem() {
         override val title = R.string.home_title_navigation
         override val icon = R.drawable.ic_outline_home_24

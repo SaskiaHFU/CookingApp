@@ -5,21 +5,12 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.saskiahfu.hfu.cookingapp.R
 import com.saskiahfu.hfu.cookingapp.feature.main.modifier
 import com.saskiahfu.hfu.cookingapp.feature.main.navigation.*
 import com.saskiahfu.hfu.cookingapp.feature.main.navigation.BottomNavigationItem.Cart
@@ -27,7 +18,6 @@ import com.saskiahfu.hfu.cookingapp.feature.main.navigation.BottomNavigationItem
 
 @Composable
 fun MainScreen(viewModel: MainViewModel = viewModel()) {
-//    val totalCount by viewModel.bindUi().observeAsState(0)
     MainScreenUI()
 }
 
@@ -53,18 +43,14 @@ private fun MainScreenUI() {
                             text = stringResource(BottomNavigationItem.Recipes.title),
                             style = font
                         )
-                        BottomNavigationItem.Links.routeName -> Text(
-                            text = stringResource(BottomNavigationItem.Links.title),
-                            style = font
-                        )
                         BottomNavigationItem.Week.routeName -> Text(
                             text = stringResource(BottomNavigationItem.Week.title),
                             style = font
                         )
-                        BottomNavigationItem.Home.routeName -> Text(
-                            text = stringResource(BottomNavigationItem.Home.title),
-                            style = font
-                        )
+//                        BottomNavigationItem.Home.routeName -> Text(
+//                            text = stringResource(BottomNavigationItem.Home.title),
+//                            style = font
+//                        )
                         BottomNavigationItem.Profile.routeName -> Text(
                             text = stringResource(BottomNavigationItem.Profile.title),
                             style = font

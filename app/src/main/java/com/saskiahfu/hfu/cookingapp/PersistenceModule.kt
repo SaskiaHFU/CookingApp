@@ -6,11 +6,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.room.Room
 import com.saskiahfu.hfu.cookingapp.data.database.AppDatabase
-import com.saskiahfu.hfu.cookingapp.data.database.ProductDao
 import com.saskiahfu.hfu.cookingapp.data.database.cart.CartDao
 import com.saskiahfu.hfu.cookingapp.data.database.recipe.RecipeDao
-import com.saskiahfu.hfu.cookingapp.data.database.links.LinksCategoryDao
-import com.saskiahfu.hfu.cookingapp.data.database.links.LinksDao
 import com.saskiahfu.hfu.cookingapp.data.database.mealplan.DailyMealsDao
 import com.saskiahfu.hfu.cookingapp.data.database.recipe.RecipeCategoryDao
 import dagger.Module
@@ -43,17 +40,10 @@ object PersistenceModule {
         .build()
 
     @Provides
-    fun provideProductsDao(
-        database: AppDatabase,
-    ): ProductDao = database.productDao()
-
-    @Provides
     fun provideCartDao(
         database: AppDatabase,
     ): CartDao = database.cartDao()
-//    fun provideShoppingCartDao(
-//        database: AppDatabase,
-//    ): ShoppingCartDao = database.shoppingCartDao()
+
 
     @Provides
     fun provideRecipeDao(
@@ -64,16 +54,6 @@ object PersistenceModule {
     fun provideRecipeCatDao(
         database: AppDatabase,
     ): RecipeCategoryDao = database.recipeCatDao()
-
-    @Provides
-    fun provideLinksDao(
-        database: AppDatabase,
-    ): LinksDao = database.linksDao()
-
-    @Provides
-    fun provideLinksCategoryDao(
-        database: AppDatabase,
-    ): LinksCategoryDao = database.linksCategoryDao()
 
     @Provides
     fun provideDailyMealsDao(

@@ -59,9 +59,7 @@ private fun RecipeScreenUI(
     navController: NavController
 ) {
 
-    var selected by remember { mutableStateOf("") }
     val scrollState = rememberLazyListState()
-    val context = LocalContext.current
 
     var showPopup by remember { mutableStateOf(false) }
     var categoryName by remember { mutableStateOf("") }
@@ -113,29 +111,39 @@ private fun RecipeScreenUI(
     }
 
 
-    Column() {
-
 //Categories
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Row() {
-                IconButton(
-                    onClick = {
-                        showPopup = true
-                    },
-                    modifier.size(25.dp)
-                ) {
-                    Icon(
-                        Icons.Default.Add,
-                        contentDescription = "Add Meal",
-                        tint = MaterialTheme.colors.secondary,
-                    )
-                }
-            }
-            LazyRow(
-                modifier.padding(categoryPadding),
-                state = scrollState,
-                horizontalArrangement = Arrangement.spacedBy(15.dp)
+    Column {
+        Row(modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            IconButton(
+                onClick = {
+                    showPopup = true
+                },
+                modifier
+                    .size(50.dp)
+                    .padding(start = 15.dp),
             ) {
+                Icon(
+                    Icons.Default.Add,
+                    contentDescription = stringResource(R.string.mealplan_add),
+                    tint = MaterialTheme.colors.secondary,
+                )
+
+            }
+            Text(
+                text = stringResource(R.string.recipe_add_new_cat),
+                style = MaterialTheme.typography.body1
+            )
+        }
+
+        Row(modifier.fillMaxWidth()) {
+            LazyRow(
+                modifier
+                    .padding(categoryPadding)
+                    .fillMaxWidth(),
+                state = scrollState,
+                horizontalArrangement = Arrangement.spacedBy(15.dp),
+
+                ) {
                 items(recipe_categories) { cats ->
                     RecipeCategoryItem(cats, onClick)
                 }
@@ -144,6 +152,7 @@ private fun RecipeScreenUI(
 
 
 //Content
+
         Box(
             modifier
                 .padding(contentPadding)
@@ -152,23 +161,12 @@ private fun RecipeScreenUI(
                 items(recipes) { recipe ->
                     Button(
                         onClick = {
-//                            val name = recipe.name.lowercase().replace(" ", "")
-//                            navController.navigate(BottomNavigationItem.RecipeSingle.routeName)
                             navController.navigate(BottomNavigationItem.RecipeSingle.routeName) {
                                 popUpTo(BottomNavigationItem.Recipes.routeName) {
                                     inclusive = true
                                 }
                             }
-
                             singleRecipeID = recipe.id.value
-
-//                            val currentRoute =
-//                                navController.currentBackStackEntry?.destination?.route
-//                            println(currentRoute)
-//                            println(recipe.name.lowercase().replace(" ", ""))
-
-//                            selected = recipe.id.value
-//                            onRecipeSelect(selected)
                         },
                         modifier
                             .height(165.dp)

@@ -46,7 +46,6 @@ class RecipesViewModel @Inject constructor(
     }
 
     fun onCategorySelect(categoryName: String, context: Context) {
-
         viewModelScope.launch {
             val recipes = recipeRepository.getAllRecipes().filter {
                 it.category == categoryName

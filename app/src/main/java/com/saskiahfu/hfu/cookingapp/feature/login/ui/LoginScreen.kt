@@ -21,7 +21,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.compose.rememberNavController
 import com.saskiahfu.hfu.cookingapp.R
 import com.saskiahfu.hfu.cookingapp.feature.main.contentPadding
 import com.saskiahfu.hfu.cookingapp.feature.main.modifier
@@ -41,6 +40,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.ui.graphics.Color
 import com.saskiahfu.hfu.cookingapp.feature.main.containerPadding
 import com.saskiahfu.hfu.cookingapp.feature.main.signInPadding
 
@@ -60,12 +60,10 @@ private fun LoginScreenUi(
     onSignUp: (username: String, password: String) -> Unit,
 ) {
 
-    val navController = rememberNavController()
-
     var userName by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    var showPopup by remember { mutableStateOf(false) }
+    var showSignup by remember { mutableStateOf(false) }
 
     val fontSizeSmall = 10.sp
     val regularText = MaterialTheme.typography.body1
@@ -81,12 +79,12 @@ private fun LoginScreenUi(
         )
 
 
-    if (showPopup) {
+    if (showSignup) {
 
         var userNameSignup by remember { mutableStateOf("") }
         var passwordSignup by remember { mutableStateOf("") }
         var passwordRepeatSignup by remember { mutableStateOf("") }
-        var passwordMatch by remember { mutableStateOf(false) }
+        var errorMessage by remember { mutableStateOf(false) }
 
 //Upper Part
         Box(
@@ -113,7 +111,7 @@ private fun LoginScreenUi(
                     )
                     IconButton(
                         onClick = {
-                            showPopup = false
+                            showSignup = false
                         },
                     ) {
                         Icon(
@@ -127,7 +125,6 @@ private fun LoginScreenUi(
                 Spacer(modifier.height(50.dp))
 
 //Sign Up
-                val font = MaterialTheme.typography.body1
                 val signupImg = R.drawable.plant_signup
 
                 Column(
@@ -181,15 +178,21 @@ private fun LoginScreenUi(
                                 )
                             )
                         }
-                    }
 
+                        if (errorMessage) {
+                            Text(
+                                stringResource(R.string.signup_input_error),
+                                style = MaterialTheme.typography.body1,
+                                color = Color.Red
+                            )
+                        }
+                    }
                     Column(
                         modifier.fillMaxHeight(),
                         verticalArrangement = Arrangement.Bottom
                     ) {
 
-                        Box(
-                        ) {
+                        Box {
                             Row(
                                 modifier.align(Alignment.BottomStart)
                             ) {
@@ -208,10 +211,13 @@ private fun LoginScreenUi(
                                     .align(Alignment.BottomEnd),
                                 horizontalArrangement = Arrangement.End,
                             ) {
-
                                 Button(
                                     onClick = {
-                                        onSignUp(userNameSignup, passwordSignup)
+                                        if (passwordSignup == passwordRepeatSignup) {
+                                            onSignUp(userNameSignup, passwordSignup)
+                                        } else {
+                                            errorMessage = true
+                                        }
                                     },
                                     enabled = userNameSignup.isNotBlank() && passwordSignup.isNotBlank(),
                                     modifier = Modifier
@@ -238,7 +244,7 @@ private fun LoginScreenUi(
         }
     } //Popup end
 
-    if (!showPopup) {
+    if (!showSignup) {
 
         Column(
             modifier.fillMaxWidth(),
@@ -256,17 +262,17 @@ private fun LoginScreenUi(
         }
 
 //    Upper Part
-        Column() {
+        Column {
             Column(
                 modifier
                     .padding(startPadding)
             ) {
                 Text(
-                    text = "Welcome",
+                    text = stringResource(R.string.welcome),
                     style = headings1,
                 )
                 Text(
-                    text = "back",
+                    text = stringResource(R.string.back),
                     style = headings1,
                 )
             }
@@ -302,7 +308,6 @@ private fun LoginScreenUi(
 
 //Subinfo
                 Row(
-//                verticalAlignment = Alignment.CenterVertically,
                     modifier
                         .fillMaxWidth()
                         .padding(0.dp),
@@ -320,15 +325,7 @@ private fun LoginScreenUi(
                     }
 
                     TextButton(
-                        onClick = {
-//                        navController.navigate(BottomNavigationItem.Signup.routeName) {
-//                            popUpTo(BottomNavigationItem.Login.routeName) {
-//                                inclusive = true
-//                            }
-//                        }
-//                        Popup
-                            showPopup = true
-                        },
+                        onClick = { showSignup = true },
                     ) {
                         Text(
                             stringResource(R.string.login_button_signup),

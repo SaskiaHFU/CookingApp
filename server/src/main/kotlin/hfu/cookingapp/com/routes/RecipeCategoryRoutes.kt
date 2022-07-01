@@ -37,23 +37,20 @@ fun Route.recipeCatRouting() {
 
 val recipe_categories = listOf(
     RecipeCategory(
-        id = "0",
+        id = "a59c0e7b-3a58-4859-934d-1a0393831637",
         name = "Breakfast"
     ),
     RecipeCategory(
-        id = "1",
+        id = "867e5af2-aa53-4e46-9cfd-a1bc9b2929cb",
         name = "Lunch"
     ),
     RecipeCategory(
-        id = "3",
+        id = "f16cdf15-6528-4a0b-993c-24d5bf8007a7",
         name = "Dinner"
     ),
     RecipeCategory(
-        id = "4",
+        id = "f16cdf15-bb45-4a0b-993c-24d5bf8007a7",
         name = "Kids"
     ),
-    RecipeCategory(
-        id = "5",
-        name = "Drinks"
-    ),
+
 )

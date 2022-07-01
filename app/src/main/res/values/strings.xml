@@ -31,6 +31,8 @@
     <string name="cart_cta_pay">Pay Now</string>
 
     <!--    Login Strings-->
+    <string name="welcome">Welcome</string>
+    <string name="back">back</string>
     <string name="login">Login</string>
     <string name="login_input_email">Email</string>
     <string name="login_input_password">Password</string>
@@ -45,6 +47,7 @@
     <string name="signup_input_name">Name</string>
     <string name="signup_input_password">Password</string>
     <string name="signup_input_repeat_p">Repeat Password</string>
+    <string name="signup_input_error">Passwords don\'t match!</string>
 
     <!--  Profil  -->
     <string name="profile_title_navigation">Profile</string>
@@ -64,12 +67,21 @@
     <string name="recipe_add_link">Add Source Link</string>
     <string name="recipe_add_source_name">Add Name</string>
     <string name="recipe_add_source_uri">Add Link</string>
+    <string name="recipe_category">Category: </string>
+    <string name="recipe_ingredients">Ingredients </string>
+    <string name="recipe_steps">Steps </string>
+    <string name="recipe_source">Source </string>
+    <string name="recipe_follow_link">Follow link </string>
+    <string name="recipe_add_new_cat">Add new category</string>
 
     <!--    Mealplan-->
     <string name="mealplan_add">Add Meal</string>
     <string name="mealplan_bf">Breakfast: </string>
     <string name="mealplan_lu">Lunch: </string>
     <string name="mealplan_di">Dinner: </string>
+    <string name="mealplan_bf_">Breakfast</string>
+    <string name="mealplan_lu_">Lunch</string>
+    <string name="mealplan_di_">Dinner</string>
 
 
 </resources>

@@ -3,7 +3,6 @@ package com.saskiahfu.hfu.cookingapp.domain
 import com.saskiahfu.hfu.cookingapp.data.RecipeRepository
 import com.saskiahfu.hfu.cookingapp.data.network.AddRecipeRequestDto
 import com.saskiahfu.hfu.cookingapp.data.network.WebService
-import com.saskiahfu.hfu.cookingapp.domain.model.ProductIcon
 import com.saskiahfu.hfu.cookingapp.domain.model.Recipe
 import com.saskiahfu.hfu.cookingapp.domain.model.RecipeId
 import com.saskiahfu.hfu.cookingapp.domain.model.RecipeImg

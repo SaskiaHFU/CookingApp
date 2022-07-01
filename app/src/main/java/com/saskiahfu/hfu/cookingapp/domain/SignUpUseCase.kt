@@ -13,7 +13,6 @@ import kotlinx.coroutines.withContext
 class SignUpUseCase @Inject constructor(
     private val webService: WebService,
     private val userSettingsRepository: UserSettingsRepository,
-    private val downloadProductsUseCase: DownloadProductsUseCase,
     private val downloadCartUseCase: DownloadCartUseCase,
     private val downloadRecipesUseCase: DownloadRecipesUseCase,
     private val downloadMealsUseCase: DownloadMealsUseCase,
@@ -31,11 +30,8 @@ class SignUpUseCase @Inject constructor(
                 )
             }
 
-            webService.signUp(
-                SignUpRequestDto(username, password)
-            )
+            webService.signUp(SignUpRequestDto(username, password))
 
-            downloadProductsUseCase()
             downloadRecipesUseCase()
             downloadMealsUseCase()
             downloadRecipeCategoriesUseCase()

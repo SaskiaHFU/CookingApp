@@ -19,10 +19,6 @@ interface WebService {
     @GET("v1/user")
     suspend fun login(): LoginResponseDto
 
-    //    Products
-    @GET("v1/product")
-    suspend fun getProducts(): List<ProductDto>
-
     //Cart
     @GET("v1/cart")
     suspend fun getCart(): List<CartItemDto>
@@ -84,23 +80,6 @@ data class DeleteCartItemRequestDto(
     val item: String,
 )
 
-//Product
-@Serializable
-data class AddItemRequestDto(
-    val productId: String,
-)
-
-@Serializable
-data class ProductDto(
-    val id: String,
-    val name: String,
-    val description: String,
-    @SerialName("icon")
-    val imageUrl: String,
-    val price: Double,
-)
-
-
 //Signup
 @Serializable
 data class SignUpRequestDto(
@@ -126,7 +105,6 @@ data class RecipesDto(
     val sourceName: String,
     val sourceUri: String
 )
-
 
 @Serializable
 data class AddRecipeRequestDto(
