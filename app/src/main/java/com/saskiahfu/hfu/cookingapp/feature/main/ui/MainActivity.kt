@@ -177,7 +177,8 @@ class MainActivity : ComponentActivity() {
                     if (loginState is LoginState.LoggedIn) {
                         MainScreen()
                     } else if (loginState != null) {
-                        LoginScreen()
+                       LoginScreen()
+//                        MainScreen()
                     }
                 }
             }
